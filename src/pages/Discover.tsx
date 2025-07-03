@@ -65,8 +65,27 @@ const Discover: React.FC = () => {
   useEffect(() => {
     if (user && profile) {
       fetchProfiles()
+      checkSuperLikesLeft()
     }
   }, [user, profile])
+
+  const checkSuperLikesLeft = async () => {
+    if (!user) return
+
+    try {
+      const { data, error } = await supabase
+        .rpc('check_super_like_usage', { user_uuid: user.id })
+
+      if (error) {
+        console.error('Error checking super likes:', error)
+        return
+      }
+
+      setSuperLikesLeft(data || 0)
+    } catch (error) {
+      console.error('Error checking super likes:', error)
+    }
+  }
 
   const fetchProfiles = async () => {
     if (!user || !profile) return
@@ -138,7 +157,7 @@ const Discover: React.FC = () => {
 
       // Filtrer les profils déjà likés/passés
       const likedProfiles = await getLikedProfiles()
-      let filteredProfiles = data.filter(p => !likedProfiles.includes(p.id))
+      let filteredProfiles = (data || []).filter(p => !likedProfiles.includes(p.id))
 
       // Filtrer par centres d'intérêt
       if (filters.interests.length > 0) {
@@ -191,7 +210,7 @@ const Discover: React.FC = () => {
         .eq('user_id', user.id)
 
       if (error) throw error
-      return data.map(like => like.liked_user_id)
+      return (data || []).map(like => like.liked_user_id)
     } catch (error) {
       console.error('Error fetching liked profiles:', error)
       return []
@@ -227,7 +246,7 @@ const Discover: React.FC = () => {
 
       // Décrémenter les super likes
       if (isSuperLike) {
-        setSuperLikesLeft(prev => prev - 1)
+        setSuperLikesLeft(prev => Math.max(0, prev - 1))
       }
 
       // Vérifier si c'est un match mutuel
@@ -239,15 +258,6 @@ const Discover: React.FC = () => {
         .single()
 
       if (mutualLike) {
-        // Créer le match
-        await supabase
-          .from('matches')
-          .insert({ 
-            user_id: user.id, 
-            matched_user_id: profileId, 
-            status: 'mutual' 
-          })
-
         // Créer une notification
         await supabase
           .from('notifications')

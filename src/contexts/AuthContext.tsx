@@ -106,11 +106,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (error) throw error
 
     if (data.user) {
+      // Wait a bit for the trigger to create the profile
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // Update the profile with user data
       const { error: profileError } = await supabase
         .from('profiles')
-        .insert([{ id: data.user.id, email, ...userData }])
+        .update({ 
+          ...userData,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', data.user.id)
       
-      if (profileError) throw profileError
+      if (profileError) {
+        console.error('Error updating profile:', profileError)
+        // Don't throw error, profile will be updated later
+      }
     }
   }
 

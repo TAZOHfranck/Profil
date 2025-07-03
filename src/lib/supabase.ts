@@ -3,6 +3,10 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Missing Supabase environment variables')
+}
+
 export const supabase = createClient(supabaseUrl, supabaseKey)
 
 // Types pour la base de données
@@ -33,6 +37,9 @@ export interface Profile {
   body_type: string
   smoking: 'never' | 'occasionally' | 'regularly'
   drinking: 'never' | 'occasionally' | 'regularly'
+  is_verified?: boolean
+  is_premium?: boolean
+  is_active?: boolean
 }
 
 export interface Match {
@@ -58,5 +65,17 @@ export interface Like {
   id: string
   user_id: string
   liked_user_id: string
+  created_at: string
+  is_super_like?: boolean
+}
+
+export interface Notification {
+  id: string
+  user_id: string
+  type: 'like' | 'match' | 'message' | 'profile_view' | 'system'
+  title: string
+  message: string
+  data: any
+  read: boolean
   created_at: string
 }

@@ -25,6 +25,18 @@ const PhotoManager: React.FC<PhotoManagerProps> = ({ photos, onPhotosUpdate }) =
       for (const file of Array.from(files)) {
         if (newPhotos.length >= 6) break // Limite de 6 photos
 
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+          console.error('File is not an image')
+          continue
+        }
+
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+          console.error('File is too large')
+          continue
+        }
+
         const fileExt = file.name.split('.').pop()
         const fileName = `${user.id}/${Date.now()}.${fileExt}`
 
@@ -32,23 +44,16 @@ const PhotoManager: React.FC<PhotoManagerProps> = ({ photos, onPhotosUpdate }) =
           .from('photos')
           .upload(fileName, file)
 
-        if (error) throw error
+        if (error) {
+          console.error('Error uploading file:', error)
+          continue
+        }
 
         const { data: { publicUrl } } = supabase.storage
           .from('photos')
           .getPublicUrl(fileName)
 
         newPhotos.push(publicUrl)
-
-        // Sauvegarder en base
-        await supabase
-          .from('photos')
-          .insert({
-            user_id: user.id,
-            url: publicUrl,
-            position: newPhotos.length - 1,
-            is_primary: newPhotos.length === 1
-          })
       }
 
       onPhotosUpdate(newPhotos)
@@ -64,12 +69,19 @@ const PhotoManager: React.FC<PhotoManagerProps> = ({ photos, onPhotosUpdate }) =
     const newPhotos = photos.filter((_, i) => i !== index)
 
     try {
-      // Supprimer de la base
-      await supabase
+      // Extract file path from URL
+      const urlParts = photoUrl.split('/')
+      const fileName = urlParts[urlParts.length - 1]
+      const filePath = `${user?.id}/${fileName}`
+
+      // Remove from storage
+      const { error } = await supabase.storage
         .from('photos')
-        .delete()
-        .eq('user_id', user?.id)
-        .eq('url', photoUrl)
+        .remove([filePath])
+
+      if (error) {
+        console.error('Error removing photo from storage:', error)
+      }
 
       onPhotosUpdate(newPhotos)
     } catch (error) {
@@ -77,28 +89,11 @@ const PhotoManager: React.FC<PhotoManagerProps> = ({ photos, onPhotosUpdate }) =
     }
   }
 
-  const setPrimaryPhoto = async (index: number) => {
+  const setPrimaryPhoto = (index: number) => {
     const newPhotos = [...photos]
     const [primaryPhoto] = newPhotos.splice(index, 1)
     newPhotos.unshift(primaryPhoto)
-
-    try {
-      // Mettre à jour les positions en base
-      for (let i = 0; i < newPhotos.length; i++) {
-        await supabase
-          .from('photos')
-          .update({ 
-            position: i, 
-            is_primary: i === 0 
-          })
-          .eq('user_id', user?.id)
-          .eq('url', newPhotos[i])
-      }
-
-      onPhotosUpdate(newPhotos)
-    } catch (error) {
-      console.error('Error setting primary photo:', error)
-    }
+    onPhotosUpdate(newPhotos)
   }
 
   const handleDragStart = (index: number) => {
@@ -158,6 +153,10 @@ const PhotoManager: React.FC<PhotoManagerProps> = ({ photos, onPhotosUpdate }) =
               src={photo}
               alt={`Photo ${index + 1}`}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement
+                target.src = 'https://via.placeholder.com/300x300?text=Image+Error'
+              }}
             />
             
             {/* Primary photo indicator */}
@@ -195,7 +194,7 @@ const PhotoManager: React.FC<PhotoManagerProps> = ({ photos, onPhotosUpdate }) =
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading}
-            className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:border-red-500 hover:text-red-500 transition-colors"
+            className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:border-red-500 hover:text-red-500 transition-colors disabled:opacity-50"
           >
             <Camera className="h-8 w-8 mb-2" />
             <span className="text-sm">Ajouter une photo</span>
@@ -204,7 +203,7 @@ const PhotoManager: React.FC<PhotoManagerProps> = ({ photos, onPhotosUpdate }) =
       </div>
 
       <p className="text-sm text-gray-600">
-        Vous pouvez ajouter jusqu'à 6 photos. Glissez-déposez pour réorganiser.
+        Vous pouvez ajouter jusqu'à 6 photos (max 5MB chacune). Glissez-déposez pour réorganiser.
         La première photo sera votre photo principale.
       </p>
     </div>
