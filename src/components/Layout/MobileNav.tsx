@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Heart, MessageCircle, Search, User, Home, Shield } from 'lucide-react'
+import { Heart, MessageCircle, Search, User, Home, Calendar, BookOpen } from 'lucide-react'
 
 const MobileNav: React.FC = () => {
   const location = useLocation()
@@ -53,6 +53,17 @@ const MobileNav: React.FC = () => {
         >
           <MessageCircle className="h-6 w-6" />
           <span className="text-xs mt-1">Messages</span>
+        </Link>
+        <Link
+          to="/events"
+          className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
+            isActive('/events')
+              ? 'text-red-600'
+              : 'text-gray-600'
+          }`}
+        >
+          <Calendar className="h-6 w-6" />
+          <span className="text-xs mt-1">Événements</span>
         </Link>
         <Link
           to="/profile"

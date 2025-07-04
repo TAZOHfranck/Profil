@@ -33,6 +33,14 @@ export interface Profile {
   body_type: string
   smoking: 'never' | 'occasionally' | 'regularly'
   drinking: 'never' | 'occasionally' | 'regularly'
+  is_verified: boolean
+  is_premium: boolean
+  is_active: boolean
+  role: 'user' | 'admin' | 'moderator'
+  credits: number
+  verification_status: 'none' | 'pending' | 'verified' | 'rejected'
+  compatibility_completed: boolean
+  compatibility_score: number
 }
 
 export interface Match {
@@ -58,5 +66,58 @@ export interface Like {
   id: string
   user_id: string
   liked_user_id: string
+  created_at: string
+  is_super_like: boolean
+}
+
+export interface Notification {
+  id: string
+  user_id: string
+  type: 'like' | 'match' | 'message' | 'profile_view' | 'system' | 'gift'
+  title: string
+  message: string
+  data: any
+  read: boolean
+  created_at: string
+}
+
+export interface VirtualGift {
+  id: string
+  sender_id: string
+  recipient_id: string
+  gift_id: string
+  gift_name: string
+  gift_icon: string
+  price: number
+  message: string
+  status: 'sent' | 'received' | 'returned'
+  created_at: string
+}
+
+export interface CommunityEvent {
+  id: string
+  title: string
+  description: string
+  date: string
+  time: string
+  location: string
+  max_participants: number
+  current_participants: number
+  category: 'social' | 'romantic' | 'cultural' | 'sports'
+  image_url?: string
+  organizer_id: string
+  price: number
+  status: 'upcoming' | 'ongoing' | 'completed' | 'cancelled'
+  created_at: string
+}
+
+export interface VerificationRequest {
+  id: string
+  user_id: string
+  type: 'photo' | 'phone' | 'document'
+  data: any
+  status: 'pending' | 'approved' | 'rejected'
+  reviewed_by?: string
+  reviewed_at?: string
   created_at: string
 }

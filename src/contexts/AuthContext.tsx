@@ -31,6 +31,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('🔍 Session initiale:', session?.user?.email || 'Aucune session')
       setUser(session?.user ?? null)
       if (session?.user) {
         fetchProfile(session.user.id)
@@ -42,6 +43,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('🔄 Changement d\'authentification:', event, session?.user?.email || 'Aucun utilisateur')
+      
       setUser(session?.user ?? null)
       if (session?.user) {
         await fetchProfile(session.user.id)
@@ -56,6 +59,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const fetchProfile = async (userId: string, retryCount = 0) => {
     try {
+      console.log('📋 Récupération du profil pour:', userId)
+      
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -65,69 +70,151 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) {
         // If no rows found and we haven't exceeded retry limit, retry after a delay
         if (error.code === 'PGRST116' && retryCount < 3) {
-          console.log(`Profile not found, retrying... (attempt ${retryCount + 1})`)
+          console.log(`⏳ Profil non trouvé, nouvelle tentative... (${retryCount + 1}/3)`)
           await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)))
           return fetchProfile(userId, retryCount + 1)
         }
+        
+        if (error.code === 'PGRST116') {
+          console.log('⚠️ Profil non trouvé après plusieurs tentatives')
+          // Le profil n'existe pas encore, c'est normal pour un nouvel utilisateur
+          return
+        }
+        
         throw error
       }
       
+      console.log('✅ Profil récupéré:', data.full_name)
       setProfile(data)
     } catch (error) {
-      console.error('Error fetching profile:', error)
+      console.error('❌ Erreur lors de la récupération du profil:', error)
       // Don't throw the error to prevent app crashes
       // The profile will remain null and the app can handle this state
     }
   }
 
   const signIn = async (email: string, password: string) => {
+    console.log('🔐 Tentative de connexion avec email:', email)
+    
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
-    if (error) throw error
+    
+    if (error) {
+      console.error('❌ Erreur de connexion:', error.message)
+      throw error
+    }
+    
+    console.log('✅ Connexion réussie')
   }
 
   const signInWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/discover`
+    console.log('🔐 Tentative de connexion Google...')
+    
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/discover`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
+        }
+      })
+      
+      if (error) {
+        console.error('❌ Erreur OAuth Google:', error.message)
+        throw error
       }
-    })
-    if (error) throw error
+      
+      console.log('✅ Redirection Google initiée')
+    } catch (error) {
+      console.error('❌ Erreur lors de l\'authentification Google:', error)
+      throw error
+    }
   }
 
   const signUp = async (email: string, password: string, userData: Partial<Profile>) => {
+    console.log('📝 Tentative d\'inscription avec email:', email)
+    
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          full_name: userData.full_name,
+        }
+      }
     })
-    if (error) throw error
+    
+    if (error) {
+      console.error('❌ Erreur d\'inscription:', error.message)
+      throw error
+    }
 
     if (data.user) {
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert([{ id: data.user.id, email, ...userData }])
+      console.log('✅ Inscription réussie, création du profil...')
       
-      if (profileError) throw profileError
+      // Attendre un peu pour que le trigger de création de profil s'exécute
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      try {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .upsert([{ 
+            id: data.user.id, 
+            email, 
+            ...userData,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          }])
+        
+        if (profileError) {
+          console.error('⚠️ Erreur lors de la création du profil:', profileError.message)
+          // Ne pas faire échouer l'inscription si le profil existe déjà
+          if (!profileError.message.includes('duplicate key')) {
+            throw profileError
+          }
+        }
+        
+        console.log('✅ Profil créé avec succès')
+      } catch (profileError) {
+        console.error('❌ Erreur lors de la création du profil:', profileError)
+        // Ne pas faire échouer l'inscription pour une erreur de profil
+      }
     }
   }
 
   const signOut = async () => {
+    console.log('🚪 Déconnexion...')
+    
     const { error } = await supabase.auth.signOut()
-    if (error) throw error
+    if (error) {
+      console.error('❌ Erreur de déconnexion:', error.message)
+      throw error
+    }
+    
+    console.log('✅ Déconnexion réussie')
   }
 
   const updateProfile = async (updates: Partial<Profile>) => {
     if (!user) return
 
+    console.log('📝 Mise à jour du profil...')
+    
     const { error } = await supabase
       .from('profiles')
       .update({ ...updates, updated_at: new Date().toISOString() })
       .eq('id', user.id)
 
-    if (error) throw error
+    if (error) {
+      console.error('❌ Erreur de mise à jour du profil:', error.message)
+      throw error
+    }
+    
+    console.log('✅ Profil mis à jour')
     
     // Update local state
     setProfile(prev => prev ? { ...prev, ...updates } : null)

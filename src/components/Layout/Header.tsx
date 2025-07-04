@@ -2,7 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import NotificationCenter from '../Notifications/NotificationCenter'
-import { Heart, MessageCircle, Search, User, Settings, LogOut, Bell, Shield } from 'lucide-react'
+import { 
+  Heart, 
+  MessageCircle, 
+  Search, 
+  User, 
+  Settings, 
+  LogOut, 
+  Bell, 
+  Shield,
+  Calendar,
+  BookOpen,
+  Star,
+  Crown
+} from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 
 const Header: React.FC = () => {
@@ -10,6 +23,7 @@ const Header: React.FC = () => {
   const location = useLocation()
   const [showNotifications, setShowNotifications] = useState(false)
   const [unreadCount, setUnreadCount] = useState(0)
+  const [showUserMenu, setShowUserMenu] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -59,6 +73,8 @@ const Header: React.FC = () => {
   }
 
   const isActive = (path: string) => location.pathname === path
+
+  const isAdmin = profile?.role === 'admin' || profile?.email === 'admin@afrointroductions.com'
 
   return (
     <>
@@ -112,15 +128,28 @@ const Header: React.FC = () => {
                   <span>Messages</span>
                 </Link>
                 <Link
-                  to="/safety"
+                  to="/events"
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
-                    isActive('/safety')
+                    isActive('/events')
                       ? 'bg-red-50 text-red-600'
                       : 'text-gray-600 hover:text-red-600 hover:bg-red-50'
                   }`}
                 >
-                  <Shield className="h-5 w-5" />
-                  <span>Sécurité</span>
+                  <Calendar className="h-5 w-5" />
+                  <span>Événements</span>
+                </Link>
+              </nav>
+            )}
+
+            {/* Public Navigation */}
+            {!user && (
+              <nav className="hidden md:flex items-center space-x-6">
+                <Link
+                  to="/blog"
+                  className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                >
+                  <BookOpen className="h-5 w-5" />
+                  <span>Blog</span>
                 </Link>
               </nav>
             )}
@@ -139,9 +168,10 @@ const Header: React.FC = () => {
                     </span>
                   )}
                 </button>
-                <div className="flex items-center space-x-2">
-                  <Link
-                    to="/profile"
+
+                <div className="relative">
+                  <button
+                    onClick={() => setShowUserMenu(!showUserMenu)}
                     className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
                   >
                     {profile?.photos && profile.photos.length > 0 ? (
@@ -156,13 +186,77 @@ const Header: React.FC = () => {
                       </div>
                     )}
                     <span className="hidden md:inline">{profile?.full_name || 'Profil'}</span>
-                  </Link>
-                  <button
-                    onClick={handleSignOut}
-                    className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    <LogOut className="h-5 w-5" />
+                    {profile?.is_premium && (
+                      <Crown className="h-4 w-4 text-yellow-500" />
+                    )}
                   </button>
+
+                  {/* User Dropdown Menu */}
+                  {showUserMenu && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                      <Link
+                        to="/profile"
+                        className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        <User className="h-4 w-4" />
+                        <span>Mon profil</span>
+                      </Link>
+                      <Link
+                        to="/compatibility"
+                        className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        <Star className="h-4 w-4" />
+                        <span>Test de compatibilité</span>
+                      </Link>
+                      <Link
+                        to="/verification"
+                        className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        <Shield className="h-4 w-4" />
+                        <span>Vérification</span>
+                      </Link>
+                      <Link
+                        to="/safety"
+                        className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        <Shield className="h-4 w-4" />
+                        <span>Sécurité</span>
+                      </Link>
+                      <Link
+                        to="/blog"
+                        className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        <BookOpen className="h-4 w-4" />
+                        <span>Blog</span>
+                      </Link>
+                      {isAdmin && (
+                        <Link
+                          to="/admin"
+                          className="flex items-center space-x-2 px-4 py-2 text-red-700 hover:bg-red-50 transition-colors"
+                          onClick={() => setShowUserMenu(false)}
+                        >
+                          <Settings className="h-4 w-4" />
+                          <span>Administration</span>
+                        </Link>
+                      )}
+                      <hr className="my-2" />
+                      <button
+                        onClick={() => {
+                          handleSignOut()
+                          setShowUserMenu(false)
+                        }}
+                        className="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors w-full text-left"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        <span>Se déconnecter</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (
@@ -190,6 +284,14 @@ const Header: React.FC = () => {
         isOpen={showNotifications} 
         onClose={() => setShowNotifications(false)} 
       />
+
+      {/* Click outside to close user menu */}
+      {showUserMenu && (
+        <div 
+          className="fixed inset-0 z-30" 
+          onClick={() => setShowUserMenu(false)}
+        ></div>
+      )}
     </>
   )
 }
