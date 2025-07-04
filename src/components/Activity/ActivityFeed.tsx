@@ -47,14 +47,16 @@ const ActivityFeed: React.FC = () => {
           .limit(20)
 
         likes?.forEach(like => {
-          activities.push({
-            id: like.id,
-            type: 'like',
-            user_id: like.user_id,
-            target_user_id: user.id,
-            created_at: like.created_at,
-            profile: like.profiles
-          })
+          if (like.profiles) {
+            activities.push({
+              id: like.id,
+              type: 'like',
+              user_id: like.user_id,
+              target_user_id: user.id,
+              created_at: like.created_at,
+              profile: like.profiles
+            })
+          }
         })
       }
 
@@ -71,14 +73,16 @@ const ActivityFeed: React.FC = () => {
           .limit(20)
 
         views?.forEach(view => {
-          activities.push({
-            id: view.id,
-            type: 'view',
-            user_id: view.viewer_id,
-            target_user_id: user.id,
-            created_at: view.created_at,
-            profile: view.profiles
-          })
+          if (view.profiles) {
+            activities.push({
+              id: view.id,
+              type: 'view',
+              user_id: view.viewer_id,
+              target_user_id: user.id,
+              created_at: view.created_at,
+              profile: view.profiles
+            })
+          }
         })
       }
 
@@ -96,14 +100,16 @@ const ActivityFeed: React.FC = () => {
           .limit(20)
 
         matches?.forEach(match => {
-          activities.push({
-            id: match.id,
-            type: 'match',
-            user_id: match.matched_user_id,
-            target_user_id: user.id,
-            created_at: match.created_at,
-            profile: match.profiles
-          })
+          if (match.profiles) {
+            activities.push({
+              id: match.id,
+              type: 'match',
+              user_id: match.matched_user_id,
+              target_user_id: user.id,
+              created_at: match.created_at,
+              profile: match.profiles
+            })
+          }
         })
       }
 
@@ -230,14 +236,18 @@ const ActivityFeed: React.FC = () => {
                         src={activity.profile.photos[0]}
                         alt={activity.profile.full_name}
                         className="w-12 h-12 rounded-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement
+                          target.style.display = 'none'
+                          target.nextElementSibling?.classList.remove('hidden')
+                        }}
                       />
-                    ) : (
-                      <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold">
-                          {activity.profile.full_name.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                    )}
+                    ) : null}
+                    <div className={`w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center ${activity.profile.photos && activity.profile.photos.length > 0 ? 'hidden' : ''}`}>
+                      <span className="text-white font-bold">
+                        {activity.profile.full_name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="flex-1 min-w-0">

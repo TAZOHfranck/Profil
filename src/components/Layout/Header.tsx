@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import { useAdmin } from '../../contexts/AdminContext'
 import NotificationCenter from '../Notifications/NotificationCenter'
+<<<<<<< HEAD
 import { 
   Heart, 
   MessageCircle, 
@@ -16,10 +18,14 @@ import {
   Star,
   Crown
 } from 'lucide-react'
+=======
+import { Heart, MessageCircle, Search, User, Settings, LogOut, Bell, Shield, Crown } from 'lucide-react'
+>>>>>>> 02f49e807f8a2ece04a1a17938e62aac9ee127d3
 import { supabase } from '../../lib/supabase'
 
 const Header: React.FC = () => {
   const { user, profile, signOut } = useAuth()
+  const { isAdmin } = useAdmin()
   const location = useLocation()
   const [showNotifications, setShowNotifications] = useState(false)
   const [unreadCount, setUnreadCount] = useState(0)
@@ -151,6 +157,19 @@ const Header: React.FC = () => {
                   <BookOpen className="h-5 w-5" />
                   <span>Blog</span>
                 </Link>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                      isActive('/admin')
+                        ? 'bg-purple-50 text-purple-600'
+                        : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
+                    }`}
+                  >
+                    <Settings className="h-5 w-5" />
+                    <span>Admin</span>
+                  </Link>
+                )}
               </nav>
             )}
 
@@ -179,16 +198,34 @@ const Header: React.FC = () => {
                         src={profile.photos[0]}
                         alt={profile.full_name}
                         className="w-8 h-8 rounded-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement
+                          target.style.display = 'none'
+                        }}
                       />
                     ) : (
                       <div className="w-8 h-8 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center">
                         <User className="h-5 w-5 text-white" />
                       </div>
                     )}
+<<<<<<< HEAD
                     <span className="hidden md:inline">{profile?.full_name || 'Profil'}</span>
                     {profile?.is_premium && (
                       <Crown className="h-4 w-4 text-yellow-500" />
                     )}
+=======
+                    <span className="hidden md:inline flex items-center space-x-1">
+                      <span>{profile?.full_name || 'Profil'}</span>
+                      {profile?.is_premium && <Crown className="h-4 w-4 text-yellow-500" />}
+                      {profile?.is_verified && <Shield className="h-4 w-4 text-blue-500" />}
+                    </span>
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <LogOut className="h-5 w-5" />
+>>>>>>> 02f49e807f8a2ece04a1a17938e62aac9ee127d3
                   </button>
 
                   {/* User Dropdown Menu */}

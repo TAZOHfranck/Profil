@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { supabase, Profile } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import ProfileCard from '../components/Profile/ProfileCard'
-import { Heart, MessageCircle, Users } from 'lucide-react'
+import { Heart, MessageCircle, Users, X } from 'lucide-react'
 
 interface MatchWithProfile {
   id: string
@@ -41,10 +41,10 @@ const Matches: React.FC = () => {
 
       if (error) throw error
 
-      const matchesWithProfiles = data.map(match => ({
+      const matchesWithProfiles = (data || []).map(match => ({
         ...match,
         profile: match.profiles
-      }))
+      })).filter(match => match.profile) // Filter out matches without profiles
 
       setMatches(matchesWithProfiles)
     } catch (error) {
@@ -56,7 +56,7 @@ const Matches: React.FC = () => {
 
   const handleMessage = (profileId: string) => {
     // Navigate to messages with this profile
-    console.log('Message profile:', profileId)
+    window.location.href = `/messages?user=${profileId}`
   }
 
   const handleViewProfile = (match: MatchWithProfile) => {
@@ -100,6 +100,23 @@ const Matches: React.FC = () => {
                       src={match.profile.photos[0]}
                       alt={match.profile.full_name}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement
+                        target.style.display = 'none'
+                        const parent = target.parentElement
+                        if (parent) {
+                          parent.innerHTML = `
+                            <div class="text-gray-400 text-center">
+                              <div class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <span class="text-xl font-bold text-gray-400">
+                                  ${match.profile.full_name.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
+                              <p>Photo non disponible</p>
+                            </div>
+                          `
+                        }
+                      }}
                     />
                   ) : (
                     <div className="text-gray-400 text-center">
@@ -180,7 +197,7 @@ const Matches: React.FC = () => {
                     onClick={() => setSelectedMatch(null)}
                     className="text-gray-500 hover:text-gray-700"
                   >
-                    ✕
+                    <X className="h-6 w-6" />
                   </button>
                 </div>
               </div>

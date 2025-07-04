@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { supabase, Message, Profile } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
-import { Send, Search, MoreVertical } from 'lucide-react'
+import { Send, Search, MoreVertical, Phone, Video } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
@@ -54,7 +54,7 @@ const Messages: React.FC = () => {
       // Group messages by conversation partner
       const conversationMap = new Map<string, ConversationWithProfile>()
 
-      messageData.forEach(message => {
+      messageData?.forEach(message => {
         const partnerId = message.sender_id === user.id ? message.receiver_id : message.sender_id
         const partnerProfile = message.sender_id === user.id ? message.receiver : message.sender
 
@@ -137,6 +137,13 @@ const Messages: React.FC = () => {
     }
   }
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      sendMessage()
+    }
+  }
+
   const filteredConversations = conversations.filter(conv =>
     conv.profile.full_name.toLowerCase().includes(searchTerm.toLowerCase())
   )
@@ -185,11 +192,19 @@ const Messages: React.FC = () => {
                     >
                       <div className="flex items-center space-x-3">
                         <div className="relative">
-                          <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
-                            <span className="text-white font-bold">
-                              {conversation.profile.full_name.charAt(0).toUpperCase()}
-                            </span>
-                          </div>
+                          {conversation.profile.photos && conversation.profile.photos.length > 0 ? (
+                            <img
+                              src={conversation.profile.photos[0]}
+                              alt={conversation.profile.full_name}
+                              className="w-12 h-12 rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
+                              <span className="text-white font-bold">
+                                {conversation.profile.full_name.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                          )}
                           {conversation.profile.is_online && (
                             <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
                           )}
@@ -239,11 +254,19 @@ const Messages: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
                         <div className="relative">
-                          <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
-                            <span className="text-white font-bold">
-                              {selectedConversation.profile.full_name.charAt(0).toUpperCase()}
-                            </span>
-                          </div>
+                          {selectedConversation.profile.photos && selectedConversation.profile.photos.length > 0 ? (
+                            <img
+                              src={selectedConversation.profile.photos[0]}
+                              alt={selectedConversation.profile.full_name}
+                              className="w-10 h-10 rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
+                              <span className="text-white font-bold">
+                                {selectedConversation.profile.full_name.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                          )}
                           {selectedConversation.profile.is_online && (
                             <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
                           )}
@@ -257,9 +280,17 @@ const Messages: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                      <button className="p-2 hover:bg-gray-100 rounded-full">
-                        <MoreVertical className="h-5 w-5 text-gray-500" />
-                      </button>
+                      <div className="flex items-center space-x-2">
+                        <button className="p-2 hover:bg-gray-100 rounded-full">
+                          <Phone className="h-5 w-5 text-gray-500" />
+                        </button>
+                        <button className="p-2 hover:bg-gray-100 rounded-full">
+                          <Video className="h-5 w-5 text-gray-500" />
+                        </button>
+                        <button className="p-2 hover:bg-gray-100 rounded-full">
+                          <MoreVertical className="h-5 w-5 text-gray-500" />
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -298,7 +329,7 @@ const Messages: React.FC = () => {
                         type="text"
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                        onKeyPress={handleKeyPress}
                         placeholder="Tapez votre message..."
                         className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
                       />
