@@ -155,7 +155,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     if (data.user) {
-<<<<<<< HEAD
       console.log('✅ Inscription réussie, création du profil...')
       
       // Attendre un peu pour que le trigger de création de profil s'exécute
@@ -184,23 +183,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } catch (profileError) {
         console.error('❌ Erreur lors de la création du profil:', profileError)
         // Ne pas faire échouer l'inscription pour une erreur de profil
-=======
-      // Wait a bit for the trigger to create the profile
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Update the profile with user data
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .update({ 
-          ...userData,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', data.user.id)
-      
-      if (profileError) {
-        console.error('Error updating profile:', profileError)
-        // Don't throw error, profile will be updated later
->>>>>>> 02f49e807f8a2ece04a1a17938e62aac9ee127d3
       }
     }
   }

@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useAdmin } from '../../contexts/AdminContext'
 import NotificationCenter from '../Notifications/NotificationCenter'
-<<<<<<< HEAD
 import { 
   Heart, 
   MessageCircle, 
@@ -18,14 +17,11 @@ import {
   Star,
   Crown
 } from 'lucide-react'
-=======
-import { Heart, MessageCircle, Search, User, Settings, LogOut, Bell, Shield, Crown } from 'lucide-react'
->>>>>>> 02f49e807f8a2ece04a1a17938e62aac9ee127d3
 import { supabase } from '../../lib/supabase'
 
 const Header: React.FC = () => {
   const { user, profile, signOut } = useAuth()
-  const { isAdmin } = useAdmin()
+  
   const location = useLocation()
   const [showNotifications, setShowNotifications] = useState(false)
   const [unreadCount, setUnreadCount] = useState(0)
@@ -208,24 +204,10 @@ const Header: React.FC = () => {
                         <User className="h-5 w-5 text-white" />
                       </div>
                     )}
-<<<<<<< HEAD
                     <span className="hidden md:inline">{profile?.full_name || 'Profil'}</span>
                     {profile?.is_premium && (
                       <Crown className="h-4 w-4 text-yellow-500" />
                     )}
-=======
-                    <span className="hidden md:inline flex items-center space-x-1">
-                      <span>{profile?.full_name || 'Profil'}</span>
-                      {profile?.is_premium && <Crown className="h-4 w-4 text-yellow-500" />}
-                      {profile?.is_verified && <Shield className="h-4 w-4 text-blue-500" />}
-                    </span>
-                  </Link>
-                  <button
-                    onClick={handleSignOut}
-                    className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    <LogOut className="h-5 w-5" />
->>>>>>> 02f49e807f8a2ece04a1a17938e62aac9ee127d3
                   </button>
 
                   {/* User Dropdown Menu */}

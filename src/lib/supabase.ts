@@ -37,20 +37,9 @@ export interface Profile {
   body_type: string
   smoking: 'never' | 'occasionally' | 'regularly'
   drinking: 'never' | 'occasionally' | 'regularly'
-<<<<<<< HEAD
-  is_verified: boolean
-  is_premium: boolean
-  is_active: boolean
-  role: 'user' | 'admin' | 'moderator'
-  credits: number
-  verification_status: 'none' | 'pending' | 'verified' | 'rejected'
-  compatibility_completed: boolean
-  compatibility_score: number
-=======
   is_verified?: boolean
   is_premium?: boolean
   is_active?: boolean
->>>>>>> 02f49e807f8a2ece04a1a17938e62aac9ee127d3
 }
 
 export interface Match {
@@ -77,27 +66,26 @@ export interface Like {
   user_id: string
   liked_user_id: string
   created_at: string
-<<<<<<< HEAD
+
   is_super_like: boolean
-=======
-  is_super_like?: boolean
->>>>>>> 02f49e807f8a2ece04a1a17938e62aac9ee127d3
+
+
 }
 
 export interface Notification {
   id: string
   user_id: string
-<<<<<<< HEAD
+
   type: 'like' | 'match' | 'message' | 'profile_view' | 'system' | 'gift'
-=======
-  type: 'like' | 'match' | 'message' | 'profile_view' | 'system'
->>>>>>> 02f49e807f8a2ece04a1a17938e62aac9ee127d3
+
+
+
   title: string
   message: string
   data: any
   read: boolean
   created_at: string
-<<<<<<< HEAD
+
 }
 
 export interface VirtualGift {
@@ -139,6 +127,5 @@ export interface VerificationRequest {
   reviewed_by?: string
   reviewed_at?: string
   created_at: string
-=======
->>>>>>> 02f49e807f8a2ece04a1a17938e62aac9ee127d3
+
 }
