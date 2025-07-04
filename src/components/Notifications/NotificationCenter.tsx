@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { supabase } from '../../lib/supabase'
+import { supabase, Notification } from '../../lib/supabase'
 import { useAuth } from '../../contexts/AuthContext'
 import { Bell, Heart, MessageCircle, Users, Eye, X, Check } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { fr } from 'date-fns/locale'
-
-interface Notification {
-  id: string
-  type: 'like' | 'match' | 'message' | 'profile_view' | 'system'
-  title: string
-  message: string
-  data: any
-  read: boolean
-  created_at: string
-}
 
 interface NotificationCenterProps {
   isOpen: boolean
@@ -57,10 +47,12 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, onClose
 
   const markAsRead = async (notificationId: string) => {
     try {
-      await supabase
+      const { error } = await supabase
         .from('notifications')
         .update({ read: true })
         .eq('id', notificationId)
+
+      if (error) throw error
 
       setNotifications(prev => 
         prev.map(n => n.id === notificationId ? { ...n, read: true } : n)
@@ -73,11 +65,13 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, onClose
 
   const markAllAsRead = async () => {
     try {
-      await supabase
+      const { error } = await supabase
         .from('notifications')
         .update({ read: true })
         .eq('user_id', user?.id)
         .eq('read', false)
+
+      if (error) throw error
 
       setNotifications(prev => prev.map(n => ({ ...n, read: true })))
       setUnreadCount(0)
