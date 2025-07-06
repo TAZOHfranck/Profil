@@ -1,4 +1,4 @@
-# AfrointroductionsHub - Application de Rencontre
+# MeetUp - Application de Rencontre
 
 ## 🔐 Configuration de l'Authentification Google
 

@@ -1,5 +1,5 @@
 /*
-  # Schema complet pour l'application de rencontre AfrointroductionsHub
+  # Schema complet pour l'application de rencontre MeetUp
 
   1. Tables principales
     - `profiles` - Profils utilisateurs avec informations détaillées

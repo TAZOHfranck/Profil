@@ -93,7 +93,7 @@ const CompatibilityTest: React.FC = () => {
     if (score >= 90) return 'text-green-500'
     if (score >= 80) return 'text-blue-500'
     if (score >= 70) return 'text-yellow-500'
-    return 'text-red-500'
+    return 'text-violet-500'
   }
 
   const getScoreDescription = (score: number) => {
@@ -123,7 +123,7 @@ const CompatibilityTest: React.FC = () => {
 
           <div className="grid md:grid-cols-3 gap-4 mb-6">
             <div className="text-center">
-              <Heart className="h-8 w-8 text-red-500 mx-auto mb-2" />
+              <Heart className="h-8 w-8 text-violet-500 mx-auto mb-2" />
               <h3 className="font-semibold text-gray-800">Romantique</h3>
               <p className="text-sm text-gray-600">85%</p>
             </div>
@@ -153,7 +153,7 @@ const CompatibilityTest: React.FC = () => {
 
         <button
           onClick={() => window.location.href = '/discover'}
-          className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-8 py-3 rounded-lg hover:from-red-600 hover:to-orange-600 transition-all"
+          className="bg-gradient-to-r from-violet-500 to-orange-500 text-white px-8 py-3 rounded-lg hover:from-violet-600 hover:to-orange-600 transition-all"
         >
           Découvrir des profils compatibles
         </button>
@@ -181,7 +181,7 @@ const CompatibilityTest: React.FC = () => {
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div 
-            className="bg-gradient-to-r from-red-500 to-orange-500 h-2 rounded-full transition-all duration-300"
+            className="bg-gradient-to-r from-violet-500 to-orange-500 h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
           ></div>
         </div>
@@ -198,7 +198,7 @@ const CompatibilityTest: React.FC = () => {
             <button
               key={index}
               onClick={() => handleAnswer(option)}
-              className="w-full p-4 text-left border border-gray-200 rounded-lg hover:border-red-500 hover:bg-red-50 transition-all"
+              className="w-full p-4 text-left border border-gray-200 rounded-lg hover:border-violet-500 hover:bg-violet-50 transition-all"
             >
               {option}
             </button>

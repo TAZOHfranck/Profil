@@ -83,7 +83,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, onClose
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case 'like':
-        return <Heart className="h-5 w-5 text-red-500" />
+        return <Heart className="h-5 w-5 text-violet-500" />
       case 'match':
         return <Users className="h-5 w-5 text-green-500" />
       case 'message':
@@ -128,7 +128,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, onClose
           <div className="flex-1 overflow-y-auto">
             {loading ? (
               <div className="p-4 text-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-violet-500 mx-auto"></div>
               </div>
             ) : notifications.length > 0 ? (
               <div className="divide-y divide-gray-100">

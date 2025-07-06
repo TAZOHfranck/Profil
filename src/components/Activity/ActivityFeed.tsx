@@ -126,7 +126,7 @@ const ActivityFeed: React.FC = () => {
   const getActivityIcon = (type: string) => {
     switch (type) {
       case 'like':
-        return <Heart className="h-5 w-5 text-red-500 fill-current" />
+        return <Heart className="h-5 w-5 text-violet-500 fill-current" />
       case 'view':
         return <Eye className="h-5 w-5 text-blue-500" />
       case 'message':
@@ -151,7 +151,7 @@ const ActivityFeed: React.FC = () => {
       case 'match':
         return `Nouveau match avec ${activity.profile.full_name} !`
       case 'join':
-        return `${activity.profile.full_name} a rejoint AfrointroductionsHub`
+        return `${activity.profile.full_name} a rejoint MeetUp`
       default:
         return 'Activité inconnue'
     }
@@ -160,7 +160,7 @@ const ActivityFeed: React.FC = () => {
   const getActivityColor = (type: string) => {
     switch (type) {
       case 'like':
-        return 'border-l-red-500 bg-red-50'
+        return 'border-l-violet-500 bg-violet-50'
       case 'view':
         return 'border-l-blue-500 bg-blue-50'
       case 'message':
@@ -210,7 +210,7 @@ const ActivityFeed: React.FC = () => {
               onClick={() => setFilter(key as any)}
               className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md transition-colors ${
                 filter === key
-                  ? 'bg-white text-red-600 shadow-sm'
+                  ? 'bg-white text-violet-600 shadow-sm'
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
@@ -243,7 +243,7 @@ const ActivityFeed: React.FC = () => {
                         }}
                       />
                     ) : null}
-                    <div className={`w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center ${activity.profile.photos && activity.profile.photos.length > 0 ? 'hidden' : ''}`}>
+                    <div className={`w-12 h-12 bg-gradient-to-r from-violet-500 to-orange-500 rounded-full flex items-center justify-center ${activity.profile.photos && activity.profile.photos.length > 0 ? 'hidden' : ''}`}>
                       <span className="text-white font-bold">
                         {activity.profile.full_name.charAt(0).toUpperCase()}
                       </span>

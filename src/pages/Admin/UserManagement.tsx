@@ -162,7 +162,7 @@ const UserManagement: React.FC = () => {
               onClick={() => updateUserStatus(user.id, { is_verified: !user.is_verified })}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg ${
                 user.is_verified 
-                  ? 'bg-red-100 text-red-700 hover:bg-red-200' 
+                  ? 'bg-violet-100 text-violet-700 hover:bg-violet-200' 
                   : 'bg-green-100 text-green-700 hover:bg-green-200'
               }`}
             >
@@ -186,7 +186,7 @@ const UserManagement: React.FC = () => {
               onClick={() => updateUserStatus(user.id, { is_active: !user.is_active })}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg ${
                 user.is_active 
-                  ? 'bg-red-100 text-red-700 hover:bg-red-200' 
+                  ? 'bg-violet-100 text-violet-700 hover:bg-violet-200' 
                   : 'bg-green-100 text-green-700 hover:bg-green-200'
               }`}
             >
@@ -202,7 +202,7 @@ const UserManagement: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500"></div>
       </div>
     )
   }
@@ -225,7 +225,7 @@ const UserManagement: React.FC = () => {
                 placeholder="Rechercher par nom ou email..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
               />
             </div>
           </div>
@@ -234,7 +234,7 @@ const UserManagement: React.FC = () => {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as any)}
-              className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-500"
             >
               <option value="all">Tous</option>
               <option value="active">Actifs</option>
@@ -300,7 +300,7 @@ const UserManagement: React.FC = () => {
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                         user.is_active 
                           ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
+                          : 'bg-violet-100 text-violet-800'
                       }`}>
                         {user.is_active ? 'Actif' : 'Inactif'}
                       </span>
@@ -331,7 +331,7 @@ const UserManagement: React.FC = () => {
                       </button>
                       <button
                         onClick={() => deleteUser(user.id)}
-                        className="text-red-600 hover:text-red-900"
+                        className="text-violet-600 hover:text-violet-900"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>

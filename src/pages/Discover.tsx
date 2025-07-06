@@ -346,9 +346,9 @@ const Discover: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Chargement des profils...</p>
         </div>
       </div>
@@ -358,7 +358,7 @@ const Discover: React.FC = () => {
   const currentProfile = profiles[currentProfileIndex]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 pb-20">
       <div className="container mx-auto px-4 py-8">
         {/* Profile Completion Banner */}
         {showCompletionBanner && (
@@ -482,7 +482,7 @@ const Discover: React.FC = () => {
                   </p>
                   <button
                     onClick={fetchProfiles}
-                    className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-lg hover:from-red-600 hover:to-orange-600 transition-all"
+                    className="bg-gradient-to-r from-violet-500 to-orange-500 text-white px-6 py-3 rounded-lg hover:from-violet-600 hover:to-orange-600 transition-all"
                   >
                     Actualiser
                   </button>
@@ -511,7 +511,7 @@ const Discover: React.FC = () => {
 
                 <button
                   onClick={() => handleLike(currentProfile.id, false)}
-                  className="w-14 h-14 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-full flex items-center justify-center hover:from-red-600 hover:to-orange-600 transition-all shadow-lg"
+                  className="w-14 h-14 bg-gradient-to-r from-violet-500 to-orange-500 text-white rounded-full flex items-center justify-center hover:from-violet-600 hover:to-orange-600 transition-all shadow-lg"
                 >
                   <Heart className="h-6 w-6" />
                 </button>

@@ -29,10 +29,10 @@ const LoginForm: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-orange-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-violet-50 to-orange-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <h2 className="mt-6 text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+          <h2 className="mt-6 text-3xl font-bold bg-gradient-to-r from-violet-500 to-orange-500 bg-clip-text text-transparent">
             Bienvenue !
           </h2>
           <p className="mt-2 text-sm text-gray-600">
@@ -72,7 +72,7 @@ const LoginForm: React.FC = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+                    className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                     placeholder="Entrez votre email"
                   />
                 </div>
@@ -91,7 +91,7 @@ const LoginForm: React.FC = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="appearance-none relative block w-full pl-10 pr-10 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+                    className="appearance-none relative block w-full pl-10 pr-10 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                     placeholder="Entrez votre mot de passe"
                   />
                   <button
@@ -106,7 +106,7 @@ const LoginForm: React.FC = () => {
             </div>
 
             {error && (
-              <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-lg">
+              <div className="text-violet-600 text-sm text-center bg-violet-50 p-3 rounded-lg">
                 {error}
               </div>
             )}
@@ -115,7 +115,7 @@ const LoginForm: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-violet-500 to-orange-500 hover:from-violet-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
               >
                 {loading ? 'Connexion...' : 'Se connecter'}
               </button>
@@ -124,7 +124,7 @@ const LoginForm: React.FC = () => {
             <div className="text-center">
               <p className="text-sm text-gray-600">
                 Pas encore de compte ?{' '}
-                <Link to="/register" className="font-medium text-red-600 hover:text-red-500">
+                <Link to="/register" className="font-medium text-violet-600 hover:text-violet-500">
                   S'inscrire
                 </Link>
               </p>

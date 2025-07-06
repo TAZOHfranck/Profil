@@ -76,7 +76,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
         </h2>
         <button
           onClick={() => setShowAdvanced(!showAdvanced)}
-          className="text-red-500 hover:text-red-600 flex items-center space-x-1"
+          className="text-violet-500 hover:text-violet-600 flex items-center space-x-1"
         >
           <Filter className="h-4 w-4" />
           <span>{showAdvanced ? 'Masquer' : 'Plus de filtres'}</span>
@@ -95,7 +95,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
             max="100"
             value={filters.minAge}
             onChange={(e) => updateFilter('minAge', parseInt(e.target.value))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
           />
         </div>
 
@@ -109,7 +109,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
             max="100"
             value={filters.maxAge}
             onChange={(e) => updateFilter('maxAge', parseInt(e.target.value))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
           />
         </div>
 
@@ -124,7 +124,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
               value={filters.location}
               onChange={(e) => updateFilter('location', e.target.value)}
               placeholder="Ville ou région..."
-              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
             />
           </div>
         </div>
@@ -188,7 +188,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                 <select
                   value={filters.bodyType}
                   onChange={(e) => updateFilter('bodyType', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 >
                   <option value="">Tous</option>
                   <option value="slim">Mince</option>
@@ -210,7 +210,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                     value={filters.height.min}
                     onChange={(e) => updateFilter('height', { ...filters.height, min: parseInt(e.target.value) })}
                     placeholder="Min"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                   />
                   <input
                     type="number"
@@ -219,7 +219,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                     value={filters.height.max}
                     onChange={(e) => updateFilter('height', { ...filters.height, max: parseInt(e.target.value) })}
                     placeholder="Max"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                   />
                 </div>
               </div>
@@ -237,7 +237,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                 <select
                   value={filters.smoking}
                   onChange={(e) => updateFilter('smoking', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 >
                   <option value="">Peu importe</option>
                   <option value="never">Jamais</option>
@@ -252,7 +252,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                 <select
                   value={filters.drinking}
                   onChange={(e) => updateFilter('drinking', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 >
                   <option value="">Peu importe</option>
                   <option value="never">Jamais</option>
@@ -274,7 +274,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                 <select
                   value={filters.hasChildren}
                   onChange={(e) => updateFilter('hasChildren', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 >
                   <option value="">Peu importe</option>
                   <option value="yes">Oui</option>
@@ -288,7 +288,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                 <select
                   value={filters.wantsChildren}
                   onChange={(e) => updateFilter('wantsChildren', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 >
                   <option value="">Peu importe</option>
                   <option value="yes">Oui</option>
@@ -308,7 +308,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                   onClick={() => toggleInterest(interest)}
                   className={`px-3 py-2 rounded-lg text-sm transition-colors ${
                     filters.interests.includes(interest)
-                      ? 'bg-red-500 text-white'
+                      ? 'bg-violet-500 text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -344,7 +344,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
       <div className="flex space-x-4 mt-6">
         <button
           onClick={onSearch}
-          className="flex-1 bg-gradient-to-r from-red-500 to-orange-500 text-white py-3 px-6 rounded-lg hover:from-red-600 hover:to-orange-600 transition-all flex items-center justify-center space-x-2"
+          className="flex-1 bg-gradient-to-r from-violet-500 to-orange-500 text-white py-3 px-6 rounded-lg hover:from-violet-600 hover:to-orange-600 transition-all flex items-center justify-center space-x-2"
         >
           <Search className="h-5 w-5" />
           <span>Rechercher</span>

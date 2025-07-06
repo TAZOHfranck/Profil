@@ -41,7 +41,7 @@ const GoogleAuthButton: React.FC<{ mode: 'signin' | 'signup' }> = ({ mode }) => 
       <button
         onClick={handleGoogleAuth}
         disabled={loading}
-        className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+        className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
       >
         <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
           <path
@@ -63,7 +63,7 @@ const GoogleAuthButton: React.FC<{ mode: 'signin' | 'signup' }> = ({ mode }) => 
         </svg>
         {loading ? (
           <div className="flex items-center">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-500 mr-2"></div>
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-violet-500 mr-2"></div>
             Connexion en cours...
           </div>
         ) : (
@@ -72,7 +72,7 @@ const GoogleAuthButton: React.FC<{ mode: 'signin' | 'signup' }> = ({ mode }) => 
       </button>
       
       {error && (
-        <div className="text-red-600 text-sm text-center bg-red-50 p-2 rounded-lg">
+        <div className="text-violet-600 text-sm text-center bg-violet-50 p-2 rounded-lg">
           {error}
         </div>
       )}

@@ -218,7 +218,7 @@ const ReportsManagement: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500"></div>
       </div>
     )
   }
@@ -237,7 +237,7 @@ const ReportsManagement: React.FC = () => {
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value as any)}
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-500"
           >
             <option value="all">Tous les signalements</option>
             <option value="pending">En attente</option>
@@ -278,7 +278,7 @@ const ReportsManagement: React.FC = () => {
                 <tr key={report.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <AlertTriangle className="h-5 w-5 text-red-500 mr-2" />
+                      <AlertTriangle className="h-5 w-5 text-violet-500 mr-2" />
                       <div>
                         <div className="text-sm font-medium text-gray-900">
                           Signalé par {report.reporter.full_name}

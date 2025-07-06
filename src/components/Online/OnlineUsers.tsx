@@ -142,7 +142,7 @@ const OnlineUsers: React.FC = () => {
                         className="w-12 h-12 rounded-full object-cover"
                       />
                     ) : (
-                      <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gradient-to-r from-violet-500 to-orange-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold">
                           {onlineUser.full_name.charAt(0).toUpperCase()}
                         </span>
@@ -191,7 +191,7 @@ const OnlineUsers: React.FC = () => {
                     </button>
                     <button
                       onClick={() => handleLike(onlineUser.id)}
-                      className="p-2 bg-red-100 text-red-600 rounded-full hover:bg-red-200 transition-colors"
+                      className="p-2 bg-violet-100 text-violet-600 rounded-full hover:bg-violet-200 transition-colors"
                       title="Liker"
                     >
                       <Heart className="h-4 w-4" />
@@ -218,7 +218,7 @@ const OnlineUsers: React.FC = () => {
         <div className="p-4 border-t border-gray-200 bg-gray-50">
           <button
             onClick={fetchOnlineUsers}
-            className="w-full text-center text-sm text-red-600 hover:text-red-700 font-medium"
+            className="w-full text-center text-sm text-violet-600 hover:text-violet-700 font-medium"
           >
             Actualiser la liste
           </button>

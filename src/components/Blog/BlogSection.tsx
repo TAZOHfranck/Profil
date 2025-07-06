@@ -28,10 +28,10 @@ const BlogSection: React.FC = () => {
   const defaultPosts: BlogPost[] = [
     {
       id: '1',
-      title: 'Comment créer un profil attractif sur AfrointroductionsHub',
+      title: 'Comment créer un profil attractif sur MeetUp',
       excerpt: 'Découvrez les secrets pour créer un profil qui attire l\'attention et génère des matches.',
       content: 'Votre profil est votre première impression...',
-      author: 'Équipe AfrointroductionsHub',
+      author: 'Équipe MeetUp',
       category: 'dating-tips',
       image_url: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg',
       published_at: '2024-01-15T10:00:00Z',
@@ -95,9 +95,9 @@ const BlogSection: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Chargement des articles...</p>
         </div>
       </div>
@@ -105,11 +105,11 @@ const BlogSection: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 pb-20">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <BookOpen className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <BookOpen className="h-12 w-12 text-violet-500 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Blog & Conseils</h1>
           <p className="text-gray-600">
             Découvrez nos conseils, témoignages et actualités pour réussir en amour
@@ -130,8 +130,8 @@ const BlogSection: React.FC = () => {
                 onClick={() => setCategory(key as any)}
                 className={`px-4 py-2 rounded-md transition-colors ${
                   category === key
-                    ? 'bg-red-500 text-white'
-                    : 'text-gray-600 hover:text-red-500'
+                    ? 'bg-violet-500 text-white'
+                    : 'text-gray-600 hover:text-violet-500'
                 }`}
               >
                 {label}
@@ -240,7 +240,7 @@ const BlogSection: React.FC = () => {
                     {getCategoryLabel(selectedPost.category)}
                   </span>
                   <div className="flex items-center space-x-4">
-                    <button className="flex items-center space-x-1 text-gray-500 hover:text-red-500">
+                    <button className="flex items-center space-x-1 text-gray-500 hover:text-violet-500">
                       <Heart className="h-5 w-5" />
                       <span>{selectedPost.likes_count}</span>
                     </button>
@@ -277,7 +277,7 @@ const BlogSection: React.FC = () => {
                   {selectedPost.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm"
+                      className="bg-violet-100 text-violet-800 px-3 py-1 rounded-full text-sm"
                     >
                       #{tag}
                     </span>

@@ -53,7 +53,7 @@ const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ onUpgrade }) => {
       icon: Heart,
       title: 'Likes illimités',
       description: 'Aimez autant de profils que vous voulez',
-      color: 'text-red-500'
+      color: 'text-violet-500'
     }
   ]
 
@@ -179,7 +179,7 @@ const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ onUpgrade }) => {
       </div>
 
       {/* Testimonials */}
-      <div className="bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl p-8 text-white">
+      <div className="bg-gradient-to-r from-violet-500 to-orange-500 rounded-2xl p-8 text-white">
         <h2 className="text-2xl font-bold text-center mb-8">
           Ce que disent nos membres Premium
         </h2>
@@ -195,7 +195,7 @@ const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ onUpgrade }) => {
               "Grâce à Premium, j'ai trouvé l'amour de ma vie en seulement 2 mois ! 
               Les filtres avancés m'ont permis de trouver exactement ce que je cherchais."
             </p>
-            <p className="text-red-100 font-semibold">
+            <p className="text-violet-100 font-semibold">
               - Marie, 28 ans
             </p>
           </div>
@@ -210,7 +210,7 @@ const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ onUpgrade }) => {
               "Le fait de voir qui m'a liké a complètement changé mon expérience. 
               Plus besoin de deviner, je peux directement engager la conversation !"
             </p>
-            <p className="text-red-100 font-semibold">
+            <p className="text-violet-100 font-semibold">
               - David, 32 ans
             </p>
           </div>

@@ -51,7 +51,7 @@ const VirtualGifts: React.FC<VirtualGiftsProps> = ({ recipientId, onGiftSent }) 
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'romantic': return 'from-red-500 to-pink-500'
+      case 'romantic': return 'from-violet-500 to-pink-500'
       case 'casual': return 'from-blue-500 to-cyan-500'
       case 'special': return 'from-purple-500 to-indigo-500'
       case 'luxury': return 'from-yellow-500 to-orange-500'

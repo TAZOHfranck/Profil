@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { supabase, Profile } from '../lib/supabase'
 import { User } from '@supabase/supabase-js'
+import { useRouter } from 'next/router'
 
 interface AuthContextType {
   user: User | null
@@ -11,6 +12,7 @@ interface AuthContextType {
   signInWithGoogle: () => Promise<void>
   signOut: () => Promise<void>
   updateProfile: (updates: Partial<Profile>) => Promise<void>
+  refreshProfile: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -27,6 +29,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
+
+  // Add refresh profile function that can be called from anywhere
+  const refreshProfile = async () => {
+    if (user) {
+      await fetchProfile(user.id)
+    }
+  }
 
   useEffect(() => {
     // Get initial session
@@ -54,7 +64,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(false)
     })
 
-    return () => subscription.unsubscribe()
+    // Subscribe to realtime profile changes
+    const profileSubscription = supabase
+      .channel('profile-changes')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'profiles',
+      }, async (payload) => {
+        if (user && payload.new.id === user.id) {
+          await refreshProfile()
+        }
+      })
+      .subscribe()
+
+    return () => {
+      subscription.unsubscribe()
+      profileSubscription.unsubscribe()
+    }
   }, [])
 
   const fetchProfile = async (userId: string, retryCount = 0) => {
@@ -77,7 +104,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         if (error.code === 'PGRST116') {
           console.log('⚠️ Profil non trouvé après plusieurs tentatives')
-          // Le profil n'existe pas encore, c'est normal pour un nouvel utilisateur
+          // Redirect to login if profile not found after retries
+          await signOut()
+          router.push('/login')
           return
         }
         
@@ -86,10 +115,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       console.log('✅ Profil récupéré:', data.full_name)
       setProfile(data)
+      // Refresh the current page to ensure all components have latest profile data
+      router.replace(router.asPath)
     } catch (error) {
       console.error('❌ Erreur lors de la récupération du profil:', error)
-      // Don't throw the error to prevent app crashes
-      // The profile will remain null and the app can handle this state
+      // Redirect to login on error
+      await signOut()
+      router.push('/login')
     }
   }
 
@@ -216,8 +248,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     console.log('✅ Profil mis à jour')
     
-    // Update local state
+    // Update local state and refresh page
     setProfile(prev => prev ? { ...prev, ...updates } : null)
+    router.replace(router.asPath)
   }
 
   const value = {
@@ -229,6 +262,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signInWithGoogle,
     signOut,
     updateProfile,
+    refreshProfile,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

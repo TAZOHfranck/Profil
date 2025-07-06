@@ -4,7 +4,7 @@ import { Settings, Save, AlertCircle } from 'lucide-react'
 
 const AdminSettings: React.FC = () => {
   const [settings, setSettings] = useState<SystemSettings>({
-    app_name: 'AfrointroductionsHub',
+    app_name: 'MeetUp',
     maintenance_mode: false,
     registration_enabled: true,
     email_verification_required: false,
@@ -68,7 +68,7 @@ const AdminSettings: React.FC = () => {
                   type="text"
                   value={settings.app_name}
                   onChange={(e) => updateSetting('app_name', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 />
               </div>
               
@@ -80,7 +80,7 @@ const AdminSettings: React.FC = () => {
                   type="number"
                   value={settings.featured_users_limit}
                   onChange={(e) => updateSetting('featured_users_limit', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 />
               </div>
             </div>
@@ -98,7 +98,7 @@ const AdminSettings: React.FC = () => {
                   type="number"
                   value={settings.min_age}
                   onChange={(e) => updateSetting('min_age', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 />
               </div>
               
@@ -110,7 +110,7 @@ const AdminSettings: React.FC = () => {
                   type="number"
                   value={settings.max_age}
                   onChange={(e) => updateSetting('max_age', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 />
               </div>
               
@@ -122,7 +122,7 @@ const AdminSettings: React.FC = () => {
                   type="number"
                   value={settings.max_photos_per_user}
                   onChange={(e) => updateSetting('max_photos_per_user', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 />
               </div>
             </div>
@@ -141,7 +141,7 @@ const AdminSettings: React.FC = () => {
                   step="0.01"
                   value={settings.premium_price_monthly}
                   onChange={(e) => updateSetting('premium_price_monthly', parseFloat(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 />
               </div>
               
@@ -154,7 +154,7 @@ const AdminSettings: React.FC = () => {
                   step="0.01"
                   value={settings.premium_price_yearly}
                   onChange={(e) => updateSetting('premium_price_yearly', parseFloat(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 />
               </div>
               
@@ -166,7 +166,7 @@ const AdminSettings: React.FC = () => {
                   type="number"
                   value={settings.super_likes_free}
                   onChange={(e) => updateSetting('super_likes_free', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 />
               </div>
               
@@ -178,7 +178,7 @@ const AdminSettings: React.FC = () => {
                   type="number"
                   value={settings.super_likes_premium}
                   onChange={(e) => updateSetting('super_likes_premium', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                 />
               </div>
             </div>
@@ -200,7 +200,7 @@ const AdminSettings: React.FC = () => {
                     onChange={(e) => updateSetting('maintenance_mode', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-violet-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600"></div>
                 </label>
               </div>
 
@@ -216,7 +216,7 @@ const AdminSettings: React.FC = () => {
                     onChange={(e) => updateSetting('registration_enabled', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-violet-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600"></div>
                 </label>
               </div>
 
@@ -232,7 +232,7 @@ const AdminSettings: React.FC = () => {
                     onChange={(e) => updateSetting('email_verification_required', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-violet-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600"></div>
                 </label>
               </div>
             </div>
@@ -260,7 +260,7 @@ const AdminSettings: React.FC = () => {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="flex items-center space-x-2 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center space-x-2 bg-violet-600 text-white px-6 py-2 rounded-lg hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Save className="h-4 w-4" />
               <span>{saving ? 'Sauvegarde...' : 'Sauvegarder'}</span>

@@ -106,7 +106,7 @@ const ProfileCompletionBanner: React.FC<ProfileCompletionBannerProps> = ({ onDis
                     <suggestion.icon className="h-4 w-4 text-blue-500" />
                     <span>{suggestion.text}</span>
                     <span className={`px-2 py-1 rounded-full text-xs ${
-                      suggestion.priority === 'high' ? 'bg-red-100 text-red-700' :
+                      suggestion.priority === 'high' ? 'bg-violet-100 text-violet-700' :
                       suggestion.priority === 'medium' ? 'bg-yellow-100 text-yellow-700' :
                       'bg-gray-100 text-gray-600'
                     }`}>
@@ -139,7 +139,7 @@ const ProfileCompletionBanner: React.FC<ProfileCompletionBannerProps> = ({ onDis
                   <span>Priorité dans les résultats</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-gray-700">
-                  <Heart className="h-4 w-4 text-red-500" />
+                  <Heart className="h-4 w-4 text-violet-500" />
                   <span>Voir qui vous a liké</span>
                 </div>
               </div>

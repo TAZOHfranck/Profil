@@ -65,9 +65,9 @@ const Matches: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Chargement de vos matches...</p>
         </div>
       </div>
@@ -75,7 +75,7 @@ const Matches: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 pb-20">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -94,7 +94,7 @@ const Matches: React.FC = () => {
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
                 onClick={() => handleViewProfile(match)}
               >
-                <div className="h-64 bg-gradient-to-br from-red-100 to-orange-100 flex items-center justify-center relative">
+                <div className="h-64 bg-gradient-to-br from-violet-100 to-orange-100 flex items-center justify-center relative">
                   {match.profile.photos && match.profile.photos.length > 0 ? (
                     <img
                       src={match.profile.photos[0]}
@@ -141,7 +141,7 @@ const Matches: React.FC = () => {
                       <h3 className="text-xl font-bold text-gray-900">{match.profile.full_name}</h3>
                       <p className="text-gray-600">{match.profile.age} ans • {match.profile.location}</p>
                     </div>
-                    <div className="flex items-center text-red-500">
+                    <div className="flex items-center text-violet-500">
                       <Heart className="h-5 w-5 fill-current" />
                     </div>
                   </div>
@@ -158,7 +158,7 @@ const Matches: React.FC = () => {
                         e.stopPropagation()
                         handleMessage(match.profile.id)
                       }}
-                      className="flex-1 bg-gradient-to-r from-red-500 to-orange-500 text-white py-2 px-4 rounded-lg hover:from-red-600 hover:to-orange-600 transition-all flex items-center justify-center space-x-2"
+                      className="flex-1 bg-gradient-to-r from-violet-500 to-orange-500 text-white py-2 px-4 rounded-lg hover:from-violet-600 hover:to-orange-600 transition-all flex items-center justify-center space-x-2"
                     >
                       <MessageCircle className="h-4 w-4" />
                       <span>Message</span>
@@ -179,7 +179,7 @@ const Matches: React.FC = () => {
             </p>
             <button
               onClick={() => window.location.href = '/discover'}
-              className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-lg hover:from-red-600 hover:to-orange-600 transition-all"
+              className="bg-gradient-to-r from-violet-500 to-orange-500 text-white px-6 py-3 rounded-lg hover:from-violet-600 hover:to-orange-600 transition-all"
             >
               Découvrir des profils
             </button>
@@ -210,7 +210,7 @@ const Matches: React.FC = () => {
                 <div className="mt-4 flex space-x-2">
                   <button
                     onClick={() => handleMessage(selectedMatch.profile.id)}
-                    className="flex-1 bg-gradient-to-r from-red-500 to-orange-500 text-white py-3 px-4 rounded-lg hover:from-red-600 hover:to-orange-600 transition-all flex items-center justify-center space-x-2"
+                    className="flex-1 bg-gradient-to-r from-violet-500 to-orange-500 text-white py-3 px-4 rounded-lg hover:from-violet-600 hover:to-orange-600 transition-all flex items-center justify-center space-x-2"
                   >
                     <MessageCircle className="h-5 w-5" />
                     <span>Envoyer un message</span>

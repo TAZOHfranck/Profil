@@ -93,9 +93,9 @@ const AdminDashboard: React.FC = () => {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 flex items-center justify-center">
         <div className="text-center">
-          <Shield className="h-16 w-16 text-red-500 mx-auto mb-4" />
+          <Shield className="h-16 w-16 text-violet-500 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-800 mb-2">Accès refusé</h1>
           <p className="text-gray-600">Vous n'avez pas les permissions pour accéder à cette page.</p>
         </div>
@@ -105,9 +105,9 @@ const AdminDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Chargement du tableau de bord...</p>
         </div>
       </div>
@@ -115,11 +115,11 @@ const AdminDashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 pb-20">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <Shield className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <Shield className="h-12 w-12 text-violet-500 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Administration</h1>
           <p className="text-gray-600">Tableau de bord administrateur</p>
         </div>
@@ -140,7 +140,7 @@ const AdminDashboard: React.FC = () => {
                   onClick={() => setActiveTab(key as any)}
                   className={`flex items-center space-x-2 py-4 border-b-2 transition-colors ${
                     activeTab === key
-                      ? 'border-red-500 text-red-600'
+                      ? 'border-violet-500 text-violet-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
                 >
@@ -169,10 +169,10 @@ const AdminDashboard: React.FC = () => {
                     <div className="text-sm text-green-700">Utilisateurs actifs</div>
                   </div>
                   
-                  <div className="bg-red-50 rounded-xl p-6 text-center">
-                    <Heart className="h-8 w-8 text-red-500 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-red-600">{stats.totalMatches}</div>
-                    <div className="text-sm text-red-700">Matches créés</div>
+                  <div className="bg-violet-50 rounded-xl p-6 text-center">
+                    <Heart className="h-8 w-8 text-violet-500 mx-auto mb-2" />
+                    <div className="text-2xl font-bold text-violet-600">{stats.totalMatches}</div>
+                    <div className="text-sm text-violet-700">Matches créés</div>
                   </div>
                   
                   <div className="bg-purple-50 rounded-xl p-6 text-center">
@@ -195,13 +195,13 @@ const AdminDashboard: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="bg-red-50 rounded-xl p-6">
+                  <div className="bg-violet-50 rounded-xl p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-red-800">Signalements en attente</h3>
-                      <AlertTriangle className="h-6 w-6 text-red-500" />
+                      <h3 className="text-lg font-semibold text-violet-800">Signalements en attente</h3>
+                      <AlertTriangle className="h-6 w-6 text-violet-500" />
                     </div>
-                    <div className="text-3xl font-bold text-red-600 mb-2">{stats.reportsCount}</div>
-                    <div className="text-sm text-red-700">Nécessitent une action</div>
+                    <div className="text-3xl font-bold text-violet-600 mb-2">{stats.reportsCount}</div>
+                    <div className="text-sm text-violet-700">Nécessitent une action</div>
                   </div>
                 </div>
 
@@ -212,7 +212,7 @@ const AdminDashboard: React.FC = () => {
                     <button className="bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-600 transition-colors">
                       Modérer les profils
                     </button>
-                    <button className="bg-red-500 text-white p-4 rounded-lg hover:bg-red-600 transition-colors">
+                    <button className="bg-violet-500 text-white p-4 rounded-lg hover:bg-violet-600 transition-colors">
                       Traiter les signalements
                     </button>
                     <button className="bg-green-500 text-white p-4 rounded-lg hover:bg-green-600 transition-colors">

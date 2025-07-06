@@ -1,5 +1,5 @@
 /*
-  # Fonctionnalités complètes pour AfrointroductionsHub
+  # Fonctionnalités complètes pour MeetUp
 
   1. Nouvelles tables
     - `verification_requests` - Demandes de vérification

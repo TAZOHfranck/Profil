@@ -92,7 +92,7 @@ const AdminDashboard: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500"></div>
       </div>
     )
   }
@@ -167,7 +167,7 @@ const AdminDashboard: React.FC = () => {
             title="Total Matches"
             value={matchStats?.total_matches || 0}
             icon={Heart}
-            color="bg-red-500"
+            color="bg-violet-500"
             change={`+${matchStats?.matches_today || 0} aujourd'hui`}
           />
           <StatCard
@@ -201,7 +201,7 @@ const AdminDashboard: React.FC = () => {
                 </span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-violet-500 rounded-full"></div>
                 <span className="text-sm text-gray-600">
                   {matchStats?.matches_today || 0} nouveaux matches aujourd'hui
                 </span>
@@ -227,7 +227,7 @@ const AdminDashboard: React.FC = () => {
                 <span className="text-sm font-medium">Gérer Utilisateurs</span>
               </button>
               <button className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 text-center">
-                <AlertTriangle className="h-6 w-6 mx-auto mb-2 text-red-500" />
+                <AlertTriangle className="h-6 w-6 mx-auto mb-2 text-violet-500" />
                 <span className="text-sm font-medium">Signalements</span>
               </button>
               <button className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 text-center">

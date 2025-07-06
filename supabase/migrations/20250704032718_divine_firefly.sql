@@ -1,5 +1,5 @@
 /*
-  # Fonctionnalités complètes pour AfrointroductionsHub
+  # Fonctionnalités complètes pour MeetUp
 
   1. Nouvelles tables
     - `verification_requests` - Demandes de vérification d'identité
@@ -288,7 +288,7 @@ INSERT INTO blog_posts (
 Pour la description, soyez authentique et positif. Parlez de vos passions, de ce qui vous rend unique. Évitez les clichés comme "j''aime voyager" sans donner de détails. Préférez "J''ai exploré 15 pays et mon prochain objectif est le Japon".
 
 N''oubliez pas de remplir toutes les sections de votre profil. Plus votre profil est complet, plus vous avez de chances d''attirer des personnes compatibles.',
-  'Équipe AfrointroductionsHub',
+  'Équipe MeetUp',
   'dating-tips',
   true,
   NOW(),
@@ -296,15 +296,15 @@ N''oubliez pas de remplir toutes les sections de votre profil. Plus votre profil
 ),
 (
   'Notre histoire d''amour a commencé ici',
-  'Marie et Jean racontent comment ils se sont rencontrés sur AfrointroductionsHub.',
-  'Marie, 28 ans, et Jean, 32 ans, se sont rencontrés sur AfrointroductionsHub en janvier 2024. Après plusieurs semaines d''échanges, ils ont décidé de se rencontrer autour d''un café.
+  'Marie et Jean racontent comment ils se sont rencontrés sur MeetUp.',
+  'Marie, 28 ans, et Jean, 32 ans, se sont rencontrés sur MeetUp en janvier 2024. Après plusieurs semaines d''échanges, ils ont décidé de se rencontrer autour d''un café.
 
 "Ce qui m''a plu chez Jean, c''est sa sincérité dans ses messages. Il prenait le temps de lire mon profil et posait des questions pertinentes", raconte Marie.
 
 De son côté, Jean appréciait l''authenticité de Marie : "Son profil était complet et honnête. On sentait qu''elle cherchait vraiment une relation sérieuse."
 
-Aujourd''hui, six mois plus tard, ils vivent ensemble et préparent leurs fiançailles. "AfrointroductionsHub nous a permis de nous trouver malgré nos emplois du temps chargés", concluent-ils.',
-  'Équipe AfrointroductionsHub',
+Aujourd''hui, six mois plus tard, ils vivent ensemble et préparent leurs fiançailles. "MeetUp nous a permis de nous trouver malgré nos emplois du temps chargés", concluent-ils.',
+  'Équipe MeetUp',
   'success-stories',
   true,
   NOW(),
@@ -328,7 +328,7 @@ Au-delà de l''attraction physique, les utilisateurs recherchent des partenaires
 Prendre le temps d''apprendre à se connaître avant de se rencontrer devient la norme.
 
 Ces tendances montrent une maturité croissante dans l''approche des rencontres en ligne.',
-  'Équipe AfrointroductionsHub',
+  'Équipe MeetUp',
   'lifestyle',
   true,
   NOW(),

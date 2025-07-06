@@ -134,7 +134,7 @@ const CommunityEvents: React.FC = () => {
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'social': return 'bg-blue-100 text-blue-800'
-      case 'romantic': return 'bg-red-100 text-red-800'
+      case 'romantic': return 'bg-violet-100 text-violet-800'
       case 'cultural': return 'bg-purple-100 text-purple-800'
       default: return 'bg-gray-100 text-gray-800'
     }
@@ -147,9 +147,9 @@ const CommunityEvents: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Chargement des événements...</p>
         </div>
       </div>
@@ -157,10 +157,10 @@ const CommunityEvents: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 pb-20">
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8">
-          <Calendar className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <Calendar className="h-12 w-12 text-violet-500 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Événements communautaires</h1>
           <p className="text-gray-600">
             Participez à des événements et rencontrez des personnes partageant vos intérêts
@@ -180,8 +180,8 @@ const CommunityEvents: React.FC = () => {
                 onClick={() => setFilter(key as any)}
                 className={`px-4 py-2 rounded-md transition-colors ${
                   filter === key
-                    ? 'bg-red-500 text-white'
-                    : 'text-gray-600 hover:text-red-500'
+                    ? 'bg-violet-500 text-white'
+                    : 'text-gray-600 hover:text-violet-500'
                 }`}
               >
                 {label}
@@ -254,7 +254,7 @@ const CommunityEvents: React.FC = () => {
                     <button
                       onClick={() => joinEvent(event.id)}
                       disabled={event.current_participants >= event.max_participants}
-                      className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-lg hover:from-red-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="bg-gradient-to-r from-violet-500 to-orange-500 text-white px-4 py-2 rounded-lg hover:from-violet-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {event.current_participants >= event.max_participants ? 'Complet' : 'Participer'}
                     </button>

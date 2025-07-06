@@ -81,9 +81,9 @@ const Profile: React.FC = () => {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Chargement du profil...</p>
         </div>
       </div>
@@ -91,11 +91,11 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-orange-50 pb-20">
       <div className="container mx-auto px-4 py-8">
         {/* Profile Header */}
         <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
-          <div className="relative h-48 bg-gradient-to-r from-red-500 to-orange-500">
+          <div className="relative h-48 bg-gradient-to-r from-violet-500 to-orange-500">
             <div className="absolute inset-0 bg-black bg-opacity-20"></div>
             <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
               <div className="flex items-center space-x-4">
@@ -108,7 +108,7 @@ const Profile: React.FC = () => {
                         className="w-24 h-24 rounded-full object-cover"
                       />
                     ) : (
-                      <span className="text-3xl font-bold text-red-500">
+                      <span className="text-3xl font-bold text-violet-500">
                         {profile.full_name.charAt(0).toUpperCase()}
                       </span>
                     )}
@@ -131,7 +131,7 @@ const Profile: React.FC = () => {
                       <Crown className="h-5 w-5 text-yellow-300" />
                     )}
                   </h1>
-                  <p className="text-red-100">{profile.age} ans • {profile.location}</p>
+                  <p className="text-violet-100">{profile.age} ans • {profile.location}</p>
                   <div className="flex items-center space-x-4 mt-2">
                     {profile.is_online && (
                       <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs flex items-center space-x-1">
@@ -149,7 +149,7 @@ const Profile: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsEditing(!isEditing)}
-                className="bg-white text-red-500 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors flex items-center space-x-2"
+                className="bg-white text-violet-500 px-4 py-2 rounded-lg hover:bg-violet-50 transition-colors flex items-center space-x-2"
               >
                 <Edit className="h-4 w-4" />
                 <span>{isEditing ? 'Annuler' : 'Modifier'}</span>
@@ -161,7 +161,7 @@ const Profile: React.FC = () => {
         {/* Profile Stats */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
-            <Heart className="h-8 w-8 text-red-500 mx-auto mb-2" />
+            <Heart className="h-8 w-8 text-violet-500 mx-auto mb-2" />
             <div className="text-2xl font-bold text-gray-800">156</div>
             <div className="text-sm text-gray-600">Likes reçus</div>
           </div>
@@ -192,7 +192,7 @@ const Profile: React.FC = () => {
                   onClick={() => setActiveTab(key as any)}
                   className={`flex items-center space-x-2 py-4 border-b-2 transition-colors ${
                     activeTab === key
-                      ? 'border-red-500 text-red-600'
+                      ? 'border-violet-500 text-violet-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
                 >
@@ -218,7 +218,7 @@ const Profile: React.FC = () => {
                           type="text"
                           value={editData.full_name}
                           onChange={(e) => setEditData({...editData, full_name: e.target.value})}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                         />
                       ) : (
                         <p className="text-gray-800">{profile.full_name}</p>
@@ -231,7 +231,7 @@ const Profile: React.FC = () => {
                           type="text"
                           value={editData.location}
                           onChange={(e) => setEditData({...editData, location: e.target.value})}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                         />
                       ) : (
                         <div className="flex items-center text-gray-800">
@@ -251,7 +251,7 @@ const Profile: React.FC = () => {
                       value={editData.bio}
                       onChange={(e) => setEditData({...editData, bio: e.target.value})}
                       rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                       placeholder="Parlez-nous de vous..."
                     />
                   ) : (
@@ -270,7 +270,7 @@ const Profile: React.FC = () => {
                           type="text"
                           value={editData.occupation}
                           onChange={(e) => setEditData({...editData, occupation: e.target.value})}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                         />
                       ) : (
                         <div className="flex items-center text-gray-800">
@@ -286,7 +286,7 @@ const Profile: React.FC = () => {
                           type="text"
                           value={editData.education}
                           onChange={(e) => setEditData({...editData, education: e.target.value})}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                         />
                       ) : (
                         <div className="flex items-center text-gray-800">
@@ -311,7 +311,7 @@ const Profile: React.FC = () => {
                           max="220"
                           value={editData.height}
                           onChange={(e) => setEditData({...editData, height: parseInt(e.target.value)})}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                         />
                       ) : (
                         <p className="text-gray-800">{profile.height ? `${profile.height} cm` : 'Non spécifié'}</p>
@@ -323,7 +323,7 @@ const Profile: React.FC = () => {
                         <select
                           value={editData.body_type}
                           onChange={(e) => setEditData({...editData, body_type: e.target.value})}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                         >
                           <option value="">Non spécifié</option>
                           <option value="slim">Mince</option>
@@ -349,7 +349,7 @@ const Profile: React.FC = () => {
                         <select
                           value={editData.smoking}
                           onChange={(e) => setEditData({...editData, smoking: e.target.value})}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                         >
                           <option value="never">Jamais</option>
                           <option value="occasionally">Occasionnellement</option>
@@ -368,7 +368,7 @@ const Profile: React.FC = () => {
                         <select
                           value={editData.drinking}
                           onChange={(e) => setEditData({...editData, drinking: e.target.value})}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                         >
                           <option value="never">Jamais</option>
                           <option value="occasionally">Occasionnellement</option>
@@ -395,7 +395,7 @@ const Profile: React.FC = () => {
                           onClick={() => handleInterestToggle(interest)}
                           className={`px-3 py-2 rounded-lg text-sm transition-colors ${
                             editData.interests.includes(interest)
-                              ? 'bg-red-500 text-white'
+                              ? 'bg-violet-500 text-white'
                               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                           }`}
                         >
@@ -409,7 +409,7 @@ const Profile: React.FC = () => {
                         profile.interests.map((interest, index) => (
                           <span
                             key={index}
-                            className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm"
+                            className="bg-violet-100 text-violet-800 px-3 py-1 rounded-full text-sm"
                           >
                             {interest}
                           </span>
@@ -469,7 +469,7 @@ const Profile: React.FC = () => {
                     </button>
                     <button
                       onClick={handleSave}
-                      className="px-6 py-2 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-lg hover:from-red-600 hover:to-orange-600 transition-all"
+                      className="px-6 py-2 bg-gradient-to-r from-violet-500 to-orange-500 text-white rounded-lg hover:from-violet-600 hover:to-orange-600 transition-all"
                     >
                       Enregistrer
                     </button>

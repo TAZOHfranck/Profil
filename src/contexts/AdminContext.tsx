@@ -58,7 +58,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (error) throw error
 
       // Simple admin check - you can modify this logic
-      const adminEmails = ['admin@afrointroductionshub.com', 'moderator@afrointroductionshub.com']
+      const adminEmails = ['admin@MeetUp.com', 'moderator@MeetUp.com']
       const userIsAdmin = adminEmails.includes(data.email) || data.email.endsWith('@admin.com')
 
       if (userIsAdmin) {

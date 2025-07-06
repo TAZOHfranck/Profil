@@ -123,7 +123,7 @@ const VideoCall: React.FC<VideoCallProps> = ({ isActive, onEnd, partnerName }) =
             className={`p-4 rounded-full transition-colors ${
               isAudioEnabled 
                 ? 'bg-gray-600 text-white hover:bg-gray-700' 
-                : 'bg-red-600 text-white hover:bg-red-700'
+                : 'bg-violet-600 text-white hover:bg-violet-700'
             }`}
           >
             {isAudioEnabled ? <Mic className="h-6 w-6" /> : <MicOff className="h-6 w-6" />}
@@ -134,7 +134,7 @@ const VideoCall: React.FC<VideoCallProps> = ({ isActive, onEnd, partnerName }) =
             className={`p-4 rounded-full transition-colors ${
               isVideoEnabled 
                 ? 'bg-gray-600 text-white hover:bg-gray-700' 
-                : 'bg-red-600 text-white hover:bg-red-700'
+                : 'bg-violet-600 text-white hover:bg-violet-700'
             }`}
           >
             {isVideoEnabled ? <Video className="h-6 w-6" /> : <VideoOff className="h-6 w-6" />}
@@ -142,7 +142,7 @@ const VideoCall: React.FC<VideoCallProps> = ({ isActive, onEnd, partnerName }) =
 
           <button
             onClick={onEnd}
-            className="p-4 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors"
+            className="p-4 bg-violet-600 text-white rounded-full hover:bg-violet-700 transition-colors"
           >
             <PhoneOff className="h-6 w-6" />
           </button>

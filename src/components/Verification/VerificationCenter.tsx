@@ -72,7 +72,7 @@ const VerificationCenter: React.FC = () => {
       case 'pending':
         return <Clock className="h-8 w-8 text-yellow-500" />
       case 'rejected':
-        return <AlertCircle className="h-8 w-8 text-red-500" />
+        return <AlertCircle className="h-8 w-8 text-violet-500" />
       default:
         return <Shield className="h-8 w-8 text-gray-400" />
     }

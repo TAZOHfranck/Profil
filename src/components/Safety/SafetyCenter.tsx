@@ -71,7 +71,7 @@ const SafetyCenter: React.FC = () => {
       {/* Report Form */}
       <div className="bg-white rounded-xl shadow-lg p-6">
         <div className="flex items-center space-x-3 mb-6">
-          <AlertTriangle className="h-6 w-6 text-red-600" />
+          <AlertTriangle className="h-6 w-6 text-violet-600" />
           <h2 className="text-xl font-bold text-gray-800">Signaler un Problème</h2>
         </div>
 
@@ -83,7 +83,7 @@ const SafetyCenter: React.FC = () => {
             <select
               value={reportType}
               onChange={(e) => setReportType(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
             >
               <option value="">Sélectionnez un type</option>
               {reportReasons.map((reason, index) => (
@@ -100,14 +100,14 @@ const SafetyCenter: React.FC = () => {
               value={reportDescription}
               onChange={(e) => setReportDescription(e.target.value)}
               rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
               placeholder="Décrivez le problème en détail..."
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"
+            className="w-full bg-violet-600 text-white py-3 px-4 rounded-lg hover:bg-violet-700 transition-colors"
           >
             Envoyer le Signalement
           </button>
@@ -115,20 +115,20 @@ const SafetyCenter: React.FC = () => {
       </div>
 
       {/* Emergency Contacts */}
-      <div className="bg-red-50 border border-red-200 rounded-xl p-6">
-        <h2 className="text-xl font-bold text-red-800 mb-4">Contacts d'Urgence</h2>
+      <div className="bg-violet-50 border border-violet-200 rounded-xl p-6">
+        <h2 className="text-xl font-bold text-violet-800 mb-4">Contacts d'Urgence</h2>
         <div className="space-y-3">
           <div className="flex items-center space-x-3">
-            <Phone className="h-5 w-5 text-red-600" />
-            <span className="text-red-800">Police : 17</span>
+            <Phone className="h-5 w-5 text-violet-600" />
+            <span className="text-violet-800">Police : 17</span>
           </div>
           <div className="flex items-center space-x-3">
-            <Phone className="h-5 w-5 text-red-600" />
-            <span className="text-red-800">SAMU : 15</span>
+            <Phone className="h-5 w-5 text-violet-600" />
+            <span className="text-violet-800">SAMU : 15</span>
           </div>
           <div className="flex items-center space-x-3">
-            <MessageCircle className="h-5 w-5 text-red-600" />
-            <span className="text-red-800">Numéro national d'information pour les femmes victimes de violences : 3919</span>
+            <MessageCircle className="h-5 w-5 text-violet-600" />
+            <span className="text-violet-800">Numéro national d'information pour les femmes victimes de violences : 3919</span>
           </div>
         </div>
       </div>

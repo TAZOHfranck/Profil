@@ -39,7 +39,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     <div className="bg-white rounded-xl shadow-lg overflow-hidden max-w-sm mx-auto">
       {/* Photo Section */}
       <div className="relative">
-        <div className="h-96 bg-gradient-to-br from-red-100 to-orange-100 flex items-center justify-center">
+        <div className="h-60 bg-gradient-to-br from-violet-100 to-orange-100 flex items-center justify-center">
           {profile.photos && profile.photos.length > 0 ? (
             <img
               src={profile.photos[currentPhotoIndex]}
@@ -75,7 +75,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
         {/* Online status */}
         {profile.is_online && (
-          <div className="absolute top-4 right-4 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+          <div className="absolute top-4 right-4 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
         )}
       </div>
 
@@ -124,7 +124,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
               {profile.interests.slice(0, 3).map((interest, index) => (
                 <span
                   key={index}
-                  className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full"
+                  className="bg-violet-100 text-violet-800 text-xs px-2 py-1 rounded-full"
                 >
                   {interest}
                 </span>
@@ -143,21 +143,21 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           <div className="flex space-x-4 mt-6">
             <button
               onClick={handlePass}
-              className="flex-1 bg-gray-100 text-gray-600 p-3 rounded-full hover:bg-gray-200 transition-colors flex items-center justify-center"
+              className="flex-1  bg-gray-100 text-gray-600 p-3 rounded-full hover:bg-gray-200 transition-colors flex items-center justify-center"
             >
-              <X className="h-6 w-6" />
+              <X className="h-4 w-4" />
             </button>
             <button
               onClick={handleMessage}
               className="flex-1 bg-blue-100 text-blue-600 p-3 rounded-full hover:bg-blue-200 transition-colors flex items-center justify-center"
             >
-              <MessageCircle className="h-6 w-6" />
+              <MessageCircle className="h-4 w-4" />
             </button>
             <button
               onClick={handleLike}
-              className="flex-1 bg-gradient-to-r from-red-500 to-orange-500 text-white p-3 rounded-full hover:from-red-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+              className="flex-1  bg-gradient-to-r from-violet-500 to-orange-500 text-white p-3 rounded-full hover:from-violet-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
             >
-              <Heart className="h-6 w-6" />
+              <Heart className="h-4 w-4" />
             </button>
           </div>
         )}

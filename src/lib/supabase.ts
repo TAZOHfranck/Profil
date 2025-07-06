@@ -40,6 +40,7 @@ export interface Profile {
   is_verified?: boolean
   is_premium?: boolean
   is_active?: boolean
+  role: 'user' | 'admin'
 }
 
 export interface Match {

@@ -76,10 +76,10 @@ const RegisterForm: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-orange-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-violet-50 to-orange-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <h2 className="mt-6 text-3xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+          <h2 className="mt-6 text-3xl font-bold bg-gradient-to-r from-violet-500 to-orange-500 bg-clip-text text-transparent">
             Créer un compte
           </h2>
           <p className="mt-2 text-sm text-gray-600">
@@ -119,7 +119,7 @@ const RegisterForm: React.FC = () => {
                     required
                     value={formData.full_name}
                     onChange={handleChange}
-                    className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+                    className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                     placeholder="Entrez votre nom complet"
                   />
                 </div>
@@ -138,7 +138,7 @@ const RegisterForm: React.FC = () => {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+                    className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                     placeholder="Entrez votre email"
                   />
                 </div>
@@ -160,7 +160,7 @@ const RegisterForm: React.FC = () => {
                       max="100"
                       value={formData.age}
                       onChange={handleChange}
-                      className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+                      className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                       placeholder="25"
                     />
                   </div>
@@ -179,7 +179,7 @@ const RegisterForm: React.FC = () => {
                       required
                       value={formData.location}
                       onChange={handleChange}
-                      className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+                      className="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                       placeholder="Paris"
                     />
                   </div>
@@ -196,7 +196,7 @@ const RegisterForm: React.FC = () => {
                     name="gender"
                     value={formData.gender}
                     onChange={handleChange}
-                    className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                    className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 sm:text-sm"
                   >
                     <option value="female">Femme</option>
                     <option value="male">Homme</option>
@@ -213,7 +213,7 @@ const RegisterForm: React.FC = () => {
                     name="looking_for"
                     value={formData.looking_for}
                     onChange={handleChange}
-                    className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                    className="mt-1 block w-full py-3 px-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 sm:text-sm"
                   >
                     <option value="male">Homme</option>
                     <option value="female">Femme</option>
@@ -235,7 +235,7 @@ const RegisterForm: React.FC = () => {
                     required
                     value={formData.password}
                     onChange={handleChange}
-                    className="appearance-none relative block w-full pl-10 pr-10 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+                    className="appearance-none relative block w-full pl-10 pr-10 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                     placeholder="Entrez votre mot de passe"
                   />
                   <button
@@ -261,7 +261,7 @@ const RegisterForm: React.FC = () => {
                     required
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className="appearance-none relative block w-full pl-10 pr-10 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+                    className="appearance-none relative block w-full pl-10 pr-10 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                     placeholder="Confirmez votre mot de passe"
                   />
                   <button
@@ -284,14 +284,14 @@ const RegisterForm: React.FC = () => {
                   rows={3}
                   value={formData.bio}
                   onChange={handleChange}
-                  className="mt-1 block w-full py-3 px-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                  className="mt-1 block w-full py-3 px-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 sm:text-sm"
                   placeholder="Parlez-nous de vous..."
                 />
               </div>
             </div>
 
             {error && (
-              <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-lg">
+              <div className="text-violet-600 text-sm text-center bg-violet-50 p-3 rounded-lg">
                 {error}
               </div>
             )}
@@ -300,7 +300,7 @@ const RegisterForm: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-violet-500 to-orange-500 hover:from-violet-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
               >
                 {loading ? 'Inscription...' : 'S\'inscrire'}
               </button>
@@ -309,7 +309,7 @@ const RegisterForm: React.FC = () => {
             <div className="text-center">
               <p className="text-sm text-gray-600">
                 Déjà un compte ?{' '}
-                <Link to="/login" className="font-medium text-red-600 hover:text-red-500">
+                <Link to="/login" className="font-medium text-violet-600 hover:text-violet-500">
                   Se connecter
                 </Link>
               </p>

@@ -76,7 +76,7 @@ const Header: React.FC = () => {
 
   const isActive = (path: string) => location.pathname === path
 
-  const isAdmin = profile?.role === 'admin' || profile?.email === 'admin@afrointroductions.com'
+  const isAdmin = profile?.role === 'admin' || profile?.email === 'admin@meetup.com'
 
   return (
     <>
@@ -85,11 +85,11 @@ const Header: React.FC = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <div className="bg-gradient-to-r from-red-500 to-orange-500 p-2 rounded-full">
+              <div className="bg-gradient-to-r from-violet-500 to-orange-500 p-2 rounded-full">
                 <Heart className="h-6 w-6 text-white" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
-                AfrointroductionsHub
+              <span className="text-2xl font-bold bg-gradient-to-r from-violet-500 to-orange-500 bg-clip-text text-transparent">
+                MeetUp
               </span>
             </Link>
 
@@ -100,8 +100,8 @@ const Header: React.FC = () => {
                   to="/discover"
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
                     isActive('/discover')
-                      ? 'bg-red-50 text-red-600'
-                      : 'text-gray-600 hover:text-red-600 hover:bg-red-50'
+                      ? 'bg-violet-50 text-violet-600'
+                      : 'text-gray-600 hover:text-violet-600 hover:bg-violet-50'
                   }`}
                 >
                   <Search className="h-5 w-5" />
@@ -111,19 +111,31 @@ const Header: React.FC = () => {
                   to="/matches"
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
                     isActive('/matches')
-                      ? 'bg-red-50 text-red-600'
-                      : 'text-gray-600 hover:text-red-600 hover:bg-red-50'
+                      ? 'bg-violet-50 text-violet-600'
+                      : 'text-gray-600 hover:text-violet-600 hover:bg-violet-50'
                   }`}
                 >
                   <Heart className="h-5 w-5" />
                   <span>Matches</span>
                 </Link>
+                 {/* <Link
+                  to="/search"
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                    isActive('/search')
+                      ? 'bg-violet-50 text-violet-600'
+                      : 'text-gray-600 hover:text-violet-600 hover:bg-violet-50'
+                  }`}
+                >
+                  <Search className="h-5 w-5" />
+                  <span>Recherche</span>
+                </Link> */}
+
                 <Link
                   to="/messages"
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
                     isActive('/messages')
-                      ? 'bg-red-50 text-red-600'
-                      : 'text-gray-600 hover:text-red-600 hover:bg-red-50'
+                      ? 'bg-violet-50 text-violet-600'
+                      : 'text-gray-600 hover:text-violet-600 hover:bg-violet-50'
                   }`}
                 >
                   <MessageCircle className="h-5 w-5" />
@@ -133,8 +145,8 @@ const Header: React.FC = () => {
                   to="/events"
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
                     isActive('/events')
-                      ? 'bg-red-50 text-red-600'
-                      : 'text-gray-600 hover:text-red-600 hover:bg-red-50'
+                      ? 'bg-violet-50 text-violet-600'
+                      : 'text-gray-600 hover:text-violet-600 hover:bg-violet-50'
                   }`}
                 >
                   <Calendar className="h-5 w-5" />
@@ -148,7 +160,7 @@ const Header: React.FC = () => {
               <nav className="hidden md:flex items-center space-x-6">
                 <Link
                   to="/blog"
-                  className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                  className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-600 hover:text-violet-600 hover:bg-violet-50 transition-colors"
                 >
                   <BookOpen className="h-5 w-5" />
                   <span>Blog</span>
@@ -174,11 +186,11 @@ const Header: React.FC = () => {
               <div className="flex items-center space-x-4">
                 <button 
                   onClick={() => setShowNotifications(true)}
-                  className="relative p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="relative p-2 text-gray-600 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition-colors"
                 >
                   <Bell className="h-5 w-5" />
                   {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 bg-violet-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
@@ -187,7 +199,7 @@ const Header: React.FC = () => {
                 <div className="relative">
                   <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
-                    className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                    className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-600 hover:text-violet-600 hover:bg-violet-50 transition-colors"
                   >
                     {profile?.photos && profile.photos.length > 0 ? (
                       <img
@@ -200,7 +212,7 @@ const Header: React.FC = () => {
                         }}
                       />
                     ) : (
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-500 to-orange-500 flex items-center justify-center">
                         <User className="h-5 w-5 text-white" />
                       </div>
                     )}
@@ -256,7 +268,7 @@ const Header: React.FC = () => {
                       {isAdmin && (
                         <Link
                           to="/admin"
-                          className="flex items-center space-x-2 px-4 py-2 text-red-700 hover:bg-red-50 transition-colors"
+                          className="flex items-center space-x-2 px-4 py-2 text-violet-700 hover:bg-violet-50 transition-colors"
                           onClick={() => setShowUserMenu(false)}
                         >
                           <Settings className="h-4 w-4" />
@@ -269,7 +281,7 @@ const Header: React.FC = () => {
                           handleSignOut()
                           setShowUserMenu(false)
                         }}
-                        className="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors w-full text-left"
+                        className="flex items-center space-x-2 px-4 py-2 text-violet-600 hover:bg-violet-50 transition-colors w-full text-left"
                       >
                         <LogOut className="h-4 w-4" />
                         <span>Se déconnecter</span>
@@ -282,13 +294,13 @@ const Header: React.FC = () => {
               <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
-                  className="text-gray-600 hover:text-red-600 transition-colors"
+                  className="text-gray-600 hover:text-violet-600 transition-colors"
                 >
                   Se connecter
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-2 rounded-full hover:from-red-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105"
+                  className="bg-gradient-to-r from-violet-500 to-orange-500 text-white px-6 py-2 rounded-full hover:from-violet-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105"
                 >
                   S'inscrire
                 </Link>

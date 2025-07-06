@@ -123,7 +123,7 @@ const PhotoManager: React.FC<PhotoManagerProps> = ({ photos, onPhotosUpdate }) =
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={uploading || photos.length >= 6}
-          className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-lg hover:from-red-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+          className="bg-gradient-to-r from-violet-500 to-orange-500 text-white px-4 py-2 rounded-lg hover:from-violet-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
         >
           <Upload className="h-4 w-4" />
           <span>{uploading ? 'Upload...' : 'Ajouter'}</span>
@@ -180,7 +180,7 @@ const PhotoManager: React.FC<PhotoManagerProps> = ({ photos, onPhotosUpdate }) =
               )}
               <button
                 onClick={() => removePhoto(index)}
-                className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
+                className="bg-violet-500 text-white p-2 rounded-full hover:bg-violet-600 transition-colors"
                 title="Supprimer"
               >
                 <X className="h-4 w-4" />
@@ -194,7 +194,7 @@ const PhotoManager: React.FC<PhotoManagerProps> = ({ photos, onPhotosUpdate }) =
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading}
-            className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:border-red-500 hover:text-red-500 transition-colors disabled:opacity-50"
+            className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:border-violet-500 hover:text-violet-500 transition-colors disabled:opacity-50"
           >
             <Camera className="h-8 w-8 mb-2" />
             <span className="text-sm">Ajouter une photo</span>

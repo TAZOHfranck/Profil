@@ -72,7 +72,7 @@ const AdminLayout: React.FC = () => {
                 onClick={() => setSidebarOpen(false)}
                 className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
                   isActive(item.href)
-                    ? 'bg-red-100 text-red-900'
+                    ? 'bg-violet-100 text-violet-900'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
@@ -97,7 +97,7 @@ const AdminLayout: React.FC = () => {
                 to={item.href}
                 className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
                   isActive(item.href)
-                    ? 'bg-red-100 text-red-900'
+                    ? 'bg-violet-100 text-violet-900'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
@@ -109,7 +109,7 @@ const AdminLayout: React.FC = () => {
           <div className="flex-shrink-0 border-t border-gray-200 p-4">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="h-8 w-8 rounded-full bg-red-500 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-full bg-violet-500 flex items-center justify-center">
                   <span className="text-sm font-medium text-white">
                     {adminUser?.email.charAt(0).toUpperCase()}
                   </span>
@@ -130,7 +130,7 @@ const AdminLayout: React.FC = () => {
               </Link>
               <button
                 onClick={signOut}
-                className="flex-1 bg-red-100 text-red-700 px-3 py-2 rounded-md text-sm hover:bg-red-200 flex items-center justify-center"
+                className="flex-1 bg-violet-100 text-violet-700 px-3 py-2 rounded-md text-sm hover:bg-violet-200 flex items-center justify-center"
               >
                 <LogOut className="h-4 w-4 mr-1" />
                 Sortir

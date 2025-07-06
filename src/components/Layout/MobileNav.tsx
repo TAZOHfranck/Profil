@@ -14,7 +14,7 @@ const MobileNav: React.FC = () => {
           to="/"
           className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
             isActive('/')
-              ? 'text-red-600'
+              ? 'text-violet-600'
               : 'text-gray-600'
           }`}
         >
@@ -25,7 +25,7 @@ const MobileNav: React.FC = () => {
           to="/discover"
           className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
             isActive('/discover')
-              ? 'text-red-600'
+              ? 'text-violet-600'
               : 'text-gray-600'
           }`}
         >
@@ -36,7 +36,7 @@ const MobileNav: React.FC = () => {
           to="/matches"
           className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
             isActive('/matches')
-              ? 'text-red-600'
+              ? 'text-violet-600'
               : 'text-gray-600'
           }`}
         >
@@ -47,7 +47,7 @@ const MobileNav: React.FC = () => {
           to="/messages"
           className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
             isActive('/messages')
-              ? 'text-red-600'
+              ? 'text-violet-600'
               : 'text-gray-600'
           }`}
         >
@@ -58,7 +58,7 @@ const MobileNav: React.FC = () => {
           to="/events"
           className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
             isActive('/events')
-              ? 'text-red-600'
+              ? 'text-violet-600'
               : 'text-gray-600'
           }`}
         >
@@ -69,7 +69,7 @@ const MobileNav: React.FC = () => {
           to="/profile"
           className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
             isActive('/profile')
-              ? 'text-red-600'
+              ? 'text-violet-600'
               : 'text-gray-600'
           }`}
         >
