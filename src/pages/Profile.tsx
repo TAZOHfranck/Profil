@@ -5,11 +5,15 @@ import ActivityFeed from '../components/Activity/ActivityFeed'
 import PremiumFeatures from '../components/Premium/PremiumFeatures'
 import { Camera, Edit, MapPin, Calendar, Briefcase, GraduationCap, Heart, Users, MessageCircle, Settings, Crown, Star, Shield } from 'lucide-react'
 
-const Profile: React.FC = () => {
+interface ProfileProps {
+  activeTab?: 'profile' | 'photos' | 'activity' | 'premium' | 'settings'
+}
+
+const Profile: React.FC<ProfileProps> = ({ activeTab: initialTab }) => {
   const { profile, updateProfile } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
   const [showPremium, setShowPremium] = useState(false)
-  const [activeTab, setActiveTab] = useState<'profile' | 'photos' | 'activity' | 'premium'>('profile')
+  const [activeTab, setActiveTab] = useState<'profile' | 'photos' | 'activity' | 'premium' | 'settings'>(initialTab || 'profile')
   const [editData, setEditData] = useState({
     full_name: profile?.full_name || '',
     bio: profile?.bio || '',
@@ -185,7 +189,8 @@ const Profile: React.FC = () => {
                 { key: 'profile', label: 'Profil', icon: Settings },
                 { key: 'photos', label: 'Photos', icon: Camera },
                 { key: 'activity', label: 'Activité', icon: Heart },
-                { key: 'premium', label: 'Premium', icon: Crown }
+                { key: 'premium', label: 'Premium', icon: Crown },
+                { key: 'settings', label: 'Paramètres', icon: Settings }
               ].map(({ key, label, icon: Icon }) => (
                 <button
                   key={key}
@@ -204,6 +209,66 @@ const Profile: React.FC = () => {
           </div>
 
           <div className="p-6">
+            {/* Settings Tab */}
+            {activeTab === 'settings' && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Paramètres du compte</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div>
+                        <h4 className="font-medium text-gray-800">Notifications</h4>
+                        <p className="text-sm text-gray-600">Gérer vos préférences de notifications</p>
+                      </div>
+                      <button className="px-4 py-2 bg-violet-500 text-white rounded-lg hover:bg-violet-600 transition-colors">
+                        Configurer
+                      </button>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div>
+                        <h4 className="font-medium text-gray-800">Confidentialité</h4>
+                        <p className="text-sm text-gray-600">Gérer qui peut voir votre profil</p>
+                      </div>
+                      <button className="px-4 py-2 bg-violet-500 text-white rounded-lg hover:bg-violet-600 transition-colors">
+                        Configurer
+                      </button>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div>
+                        <h4 className="font-medium text-gray-800">Sécurité</h4>
+                        <p className="text-sm text-gray-600">Modifier votre mot de passe et la sécurité du compte</p>
+                      </div>
+                      <button className="px-4 py-2 bg-violet-500 text-white rounded-lg hover:bg-violet-600 transition-colors">
+                        Configurer
+                      </button>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div>
+                        <h4 className="font-medium text-gray-800">Données et permissions</h4>
+                        <p className="text-sm text-gray-600">Gérer vos données personnelles et les autorisations</p>
+                      </div>
+                      <button className="px-4 py-2 bg-violet-500 text-white rounded-lg hover:bg-violet-600 transition-colors">
+                        Configurer
+                      </button>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
+                      <div>
+                        <h4 className="font-medium text-red-800">Supprimer le compte</h4>
+                        <p className="text-sm text-red-600">Supprimer définitivement votre compte et vos données</p>
+                      </div>
+                      <button className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                        Supprimer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Profile Tab */}
             {activeTab === 'profile' && (
               <div className="space-y-6">

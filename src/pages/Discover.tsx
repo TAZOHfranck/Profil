@@ -6,9 +6,11 @@ import ProfileCard from '../components/Profile/ProfileCard'
 import AdvancedSearch from '../components/Search/AdvancedSearch'
 import OnlineUsers from '../components/Online/OnlineUsers'
 import ProfileCompletionBanner from '../components/Profile/ProfileCompletionBanner'
-import { Filter, Heart, X, Crown, Zap } from 'lucide-react'
+import { Filter, Heart, X, Crown, Zap, Shield, Target } from 'lucide-react'
 import { useMessages } from '../contexts/MessagesContext'
 import { useLikes } from '../hooks/useLikes'
+import CompatibilityTest from '../components/Compatibility/CompatibilityTest'
+import VerificationCenter from '../components/Verification/VerificationCenter'
 
 interface SearchFilters {
   minAge: number
@@ -336,6 +338,24 @@ const Discover: React.FC = () => {
               </div>
             )}
             
+            {/* Compatibility Test */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-gray-800">Test de Compatibilité</h3>
+                <Target className="h-6 w-6 text-violet-500" />
+              </div>
+              <CompatibilityTest />
+            </div>
+
+            {/* Verification Center */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-gray-800">Centre de Vérification</h3>
+                <Shield className="h-6 w-6 text-blue-500" />
+              </div>
+              <VerificationCenter />
+            </div>
+
             {/* Premium Upgrade */}
             {!profile?.is_premium && (
               <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl p-6 text-white">
