@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { supabase, Profile } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
 import ProfileCard from '../components/Profile/ProfileCard'
 import AdvancedSearch from '../components/Search/AdvancedSearch'
 import OnlineUsers from '../components/Online/OnlineUsers'
 import ProfileCompletionBanner from '../components/Profile/ProfileCompletionBanner'
 import { Filter, Heart, X, Crown, Zap } from 'lucide-react'
+import { useMessages } from '../contexts/MessagesContext'
 
 interface SearchFilters {
   minAge: number
@@ -32,6 +34,8 @@ interface SearchFilters {
 
 const Discover: React.FC = () => {
   const { user, profile } = useAuth()
+  const navigate = useNavigate()
+  const { setSelectedConversation } = useMessages()
   const [profiles, setProfiles] = useState<Profile[]>([])
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -316,7 +320,14 @@ const Discover: React.FC = () => {
   }
 
   const handleMessage = (profileId: string) => {
-    window.location.href = `/messages?user=${profileId}`
+    // Rediriger vers la page des messages et sélectionner la conversation avec l'utilisateur
+    const conversation = {
+      profile: profiles[currentProfileIndex],
+      lastMessage: null,
+      unreadCount: 0
+    }
+    setSelectedConversation(conversation)
+    navigate(`/messages?user=${profileId}`)
   }
 
   const resetFilters = () => {

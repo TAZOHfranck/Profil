@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { supabase, Message, Profile } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
+import { useMessages } from '../contexts/MessagesContext'
+import { useLocation } from 'react-router-dom'
 import { Send, Search, MoreVertical, Phone, Video } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { fr } from 'date-fns/locale'
@@ -13,12 +15,23 @@ interface ConversationWithProfile {
 
 const Messages: React.FC = () => {
   const { user } = useAuth()
-  const [conversations, setConversations] = useState<ConversationWithProfile[]>([])
-  const [selectedConversation, setSelectedConversation] = useState<ConversationWithProfile | null>(null)
+  const { conversations, setConversations, selectedConversation, setSelectedConversation } = useMessages()
   const [messages, setMessages] = useState<Message[]>([])
   const [newMessage, setNewMessage] = useState('')
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
+  const location = useLocation()
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const userId = params.get('user')
+    if (userId && conversations.length > 0) {
+      const conversation = conversations.find(conv => conv.profile.id === userId)
+      if (conversation) {
+        setSelectedConversation(conversation)
+      }
+    }
+  }, [location.search, conversations, setSelectedConversation])
 
   useEffect(() => {
     if (user) {

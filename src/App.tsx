@@ -2,9 +2,10 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { AdminProvider, useAdmin } from './contexts/AdminContext'
+import { MessagesProvider } from './contexts/MessagesContext'
 import Header from './components/Layout/Header'
 import MobileNav from './components/Layout/MobileNav'
-import AdminLayout from './components/Admin/AdminLayout'
+// import AdminLayout from './components/Admin/AdminLayout'
 import Home from './pages/Home'
 import LoginForm from './components/Auth/LoginForm'
 import RegisterForm from './components/Auth/RegisterForm'
@@ -22,6 +23,17 @@ import AuthDebugPanel from './components/Auth/AuthDebugPanel'
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth()
+  const [error, setError] = React.useState<string | null>(null)
+
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (loading) {
+        setError('Le chargement prend plus de temps que prévu. Veuillez rafraîchir la page.')
+      }
+    }, 10000) // 10 secondes timeout
+
+    return () => clearTimeout(timeoutId)
+  }, [loading])
   
   if (loading) {
     return (
@@ -29,12 +41,15 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Chargement...</p>
+          {error && (
+            <p className="text-red-500 mt-4">{error}</p>
+          )}
         </div>
       </div>
     )
   }
   
-  return user ? <>{children}</> : <Navigate to="/login" />
+  return user ? <>{children}</> : <Navigate to="/login" replace />
 }
 
 const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -117,7 +132,9 @@ function App() {
     <AuthProvider>
       <AdminProvider>
         <Router>
-          <AppContent />
+          <MessagesProvider>
+            <AppContent />
+          </MessagesProvider>
         </Router>
       </AdminProvider>
     </AuthProvider>
