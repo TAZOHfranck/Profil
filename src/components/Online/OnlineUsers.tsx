@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { supabase, Profile } from '../../lib/supabase'
 import { useAuth } from '../../contexts/AuthContext'
+import { useMessages } from '../../contexts/MessagesContext'
 import { Users, Circle, MessageCircle, Heart } from 'lucide-react'
+import { useLikes } from '../../hooks/useLikes'
+import { useNavigate } from 'react-router-dom'
 
 const OnlineUsers: React.FC = () => {
   const { user, profile } = useAuth()
+  const { setSelectedConversation } = useMessages()
+  const navigate = useNavigate()
   const [onlineUsers, setOnlineUsers] = useState<Profile[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -86,8 +91,18 @@ const OnlineUsers: React.FC = () => {
   }
 
   const handleMessage = (profileId: string) => {
-    // Rediriger vers la page de messages avec ce profil
-    window.location.href = `/messages?user=${profileId}`
+    // Trouver le profil correspondant
+    const targetProfile = onlineUsers.find(p => p.id === profileId)
+    if (targetProfile) {
+      // Configurer la conversation
+      const conversation = {
+        profile: targetProfile,
+        lastMessage: null,
+        unreadCount: 0
+      }
+      setSelectedConversation(conversation)
+      navigate(`/messages?user=${profileId}`)
+    }
   }
 
   if (loading) {
@@ -187,7 +202,7 @@ const OnlineUsers: React.FC = () => {
                       <MessageCircle className="h-4 w-4" />
                     </button>
                     <button
-                      onClick={() => handleLike(onlineUser.id)}
+                      onClick={() => handleLikeClick(onlineUser.id)}
                       className="p-2 bg-violet-100 text-violet-600 rounded-full hover:bg-violet-200 transition-colors"
                       title="Liker"
                     >

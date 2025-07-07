@@ -33,6 +33,8 @@ interface SearchFilters {
   premiumOnly: boolean
 }
 
+// ... début du fichier inchangé jusqu'à la définition du composant Discover
+
 const Discover: React.FC = () => {
   const { user, profile } = useAuth()
   const navigate = useNavigate()
