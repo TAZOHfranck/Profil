@@ -34,20 +34,55 @@ const Messages: React.FC = () => {
   }, [location.search, conversations, setSelectedConversation])
 
   useEffect(() => {
-    if (user) {
-      fetchConversations()
-    }
+    let isMounted = true;
+    
+    const loadConversations = async () => {
+      if (!user || !isMounted) return;
+      try {
+        await fetchConversations();
+      } catch (error) {
+        console.error('Error loading conversations:', error);
+      }
+    };
+
+    loadConversations();
+    
+    return () => {
+      isMounted = false;
+    };
   }, [user])
 
   useEffect(() => {
-    if (selectedConversation) {
-      fetchMessages(selectedConversation.profile.id)
-      markMessagesAsRead(selectedConversation.profile.id)
-    }
+    let isMounted = true;
+
+    const loadMessages = async () => {
+      if (!selectedConversation || !isMounted) return;
+      setLoading(true);
+      try {
+        await Promise.all([
+          fetchMessages(selectedConversation.profile.id),
+          markMessagesAsRead(selectedConversation.profile.id)
+        ]);
+      } catch (error) {
+        console.error('Error loading messages:', error);
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadMessages();
+
+    return () => {
+      isMounted = false;
+    };
   }, [selectedConversation])
 
   useEffect(() => {
-    if (!user) return
+    if (!user) return;
+
+    let isMounted = true;
 
     // Abonnement aux changements de messages en temps réel
     const subscription = supabase
@@ -60,21 +95,39 @@ const Messages: React.FC = () => {
           filter: `sender_id=eq.${user.id},receiver_id=eq.${user.id}` 
         }, 
         async (payload) => {
-          if (selectedConversation && payload.new) {
-            const newMessage = payload.new as Message
-            if (newMessage.sender_id === selectedConversation.profile.id || 
-                newMessage.receiver_id === selectedConversation.profile.id) {
-              setMessages(prevMessages => [...prevMessages, newMessage])
-              markMessagesAsRead(selectedConversation.profile.id)
+          if (!isMounted || !selectedConversation || !payload.new) return;
+          
+          const newMessage = payload.new as Message;
+          const isRelevantMessage = (
+            newMessage.sender_id === selectedConversation.profile.id || 
+            newMessage.receiver_id === selectedConversation.profile.id
+          );
+
+          if (isRelevantMessage) {
+            setMessages(prevMessages => {
+              // Éviter les doublons
+              const messageExists = prevMessages.some(msg => msg.id === newMessage.id);
+              if (messageExists) return prevMessages;
+              return [...prevMessages, newMessage];
+            });
+
+            // Marquer comme lu de manière asynchrone
+            if (newMessage.receiver_id === user.id && !newMessage.read) {
+              try {
+                await markMessagesAsRead(selectedConversation.profile.id);
+              } catch (error) {
+                console.error('Error marking message as read:', error);
+              }
             }
           }
         }
       )
-      .subscribe()
+      .subscribe();
 
     return () => {
-      subscription.unsubscribe()
-    }
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, [user, selectedConversation])
 
   const fetchConversations = async () => {
