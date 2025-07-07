@@ -76,15 +76,12 @@ const OnlineUsers: React.FC = () => {
     }
   }
 
-  const handleLike = async (profileId: string) => {
-    if (!user) return
+  const { handleLike, loading: likeLoading } = useLikes()
 
-    try {
-      await supabase
-        .from('likes')
-        .insert({ user_id: user.id, liked_user_id: profileId })
-    } catch (error) {
-      console.error('Error liking profile:', error)
+  const handleLikeClick = async (profileId: string) => {
+    const { isMatch } = await handleLike(profileId)
+    if (isMatch) {
+      alert('🎉 C\'est un match ! Vous pouvez maintenant vous envoyer des messages.')
     }
   }
 

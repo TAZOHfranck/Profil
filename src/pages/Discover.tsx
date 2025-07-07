@@ -8,6 +8,7 @@ import OnlineUsers from '../components/Online/OnlineUsers'
 import ProfileCompletionBanner from '../components/Profile/ProfileCompletionBanner'
 import { Filter, Heart, X, Crown, Zap } from 'lucide-react'
 import { useMessages } from '../contexts/MessagesContext'
+import { useLikes } from '../hooks/useLikes'
 
 interface SearchFilters {
   minAge: number
@@ -42,7 +43,7 @@ const Discover: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false)
   const [showOnlineUsers, setShowOnlineUsers] = useState(false)
   const [showCompletionBanner, setShowCompletionBanner] = useState(true)
-  const [superLikesLeft, setSuperLikesLeft] = useState(profile?.is_premium ? 5 : 1)
+  const { superLikesLeft, handleLike: handleLikeAction, handlePass: handlePassAction, loading: likeLoading, error: likeError } = useLikes()
   const [filters, setFilters] = useState<SearchFilters>({
     minAge: 18,
     maxAge: 65,
@@ -69,27 +70,10 @@ const Discover: React.FC = () => {
   useEffect(() => {
     if (user && profile) {
       fetchProfiles()
-      checkSuperLikesLeft()
     }
   }, [user, profile])
 
-  const checkSuperLikesLeft = async () => {
-    if (!user) return
 
-    try {
-      const { data, error } = await supabase
-        .rpc('check_super_like_usage', { user_uuid: user.id })
-
-      if (error) {
-        console.error('Error checking super likes:', error)
-        return
-      }
-
-      setSuperLikesLeft(data || 0)
-    } catch (error) {
-      console.error('Error checking super likes:', error)
-    }
-  }
 
   const fetchProfiles = async () => {
     if (!user || !profile) return
@@ -222,91 +206,15 @@ const Discover: React.FC = () => {
   }
 
   const handleLike = async (profileId: string, isSuperLike = false) => {
-    if (!user) return
-
-    try {
-      // Vérifier les super likes
-      if (isSuperLike && superLikesLeft <= 0) {
-        alert('Vous n\'avez plus de Super Likes disponibles aujourd\'hui')
-        return
-      }
-
-      // Enregistrer la vue de profil
-      await supabase
-        .from('profile_views')
-        .insert({ viewer_id: user.id, viewed_user_id: profileId })
-        .on('conflict', () => {}) // Ignorer si déjà vu
-
-      // Ajouter le like
-      const { error } = await supabase
-        .from('likes')
-        .insert({ 
-          user_id: user.id, 
-          liked_user_id: profileId,
-          is_super_like: isSuperLike 
-        })
-
-      if (error) throw error
-
-      // Décrémenter les super likes
-      if (isSuperLike) {
-        setSuperLikesLeft(prev => Math.max(0, prev - 1))
-      }
-
-      // Vérifier si c'est un match mutuel
-      const { data: mutualLike } = await supabase
-        .from('likes')
-        .select('*')
-        .eq('user_id', profileId)
-        .eq('liked_user_id', user.id)
-        .single()
-
-      if (mutualLike) {
-        // Créer une notification
-        await supabase
-          .from('notifications')
-          .insert({
-            user_id: profileId,
-            type: 'match',
-            title: 'Nouveau match !',
-            message: `Vous avez un nouveau match avec ${profile?.full_name}`,
-            data: { match_user_id: user.id }
-          })
-
-        // Afficher une notification de match
-        alert('🎉 C\'est un match ! Vous pouvez maintenant vous envoyer des messages.')
-      } else {
-        // Créer une notification de like
-        await supabase
-          .from('notifications')
-          .insert({
-            user_id: profileId,
-            type: 'like',
-            title: isSuperLike ? 'Super Like reçu !' : 'Quelqu\'un vous a liké !',
-            message: `${profile?.full_name} ${isSuperLike ? 'vous a envoyé un Super Like' : 'a aimé votre profil'}`,
-            data: { liker_user_id: user.id, is_super_like: isSuperLike }
-          })
-      }
-
-      nextProfile()
-    } catch (error) {
-      console.error('Error liking profile:', error)
+    const { isMatch } = await handleLikeAction(profileId, isSuperLike)
+    if (isMatch) {
+      alert('🎉 C\'est un match ! Vous pouvez maintenant vous envoyer des messages.')
     }
+    nextProfile()
   }
 
   const handlePass = async (profileId: string) => {
-    // Enregistrer la vue de profil même pour un pass
-    if (user) {
-      try {
-        await supabase
-          .from('profile_views')
-          .insert({ viewer_id: user.id, viewed_user_id: profileId })
-          .on('conflict', () => {})
-      } catch (error) {
-        console.error('Error recording profile view:', error)
-      }
-    }
-    
+    await handlePassAction(profileId)
     nextProfile()
   }
 
@@ -461,10 +369,12 @@ const Discover: React.FC = () => {
                 <div className="relative">
                   <ProfileCard
                     profile={currentProfile}
-                    onLike={(id) => handleLike(id, false)}
+                    onLike={handleLike}
                     onPass={handlePass}
                     onMessage={handleMessage}
                     showActions={true}
+                    loading={likeLoading}
+                    superLikesLeft={superLikesLeft}
                   />
                   
                   {/* Premium Badge */}
@@ -506,25 +416,39 @@ const Discover: React.FC = () => {
               <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 flex space-x-4 z-10">
                 <button
                   onClick={() => handlePass(currentProfile.id)}
-                  className="w-14 h-14 bg-gray-500 text-white rounded-full flex items-center justify-center hover:bg-gray-600 transition-colors shadow-lg"
+                  disabled={likeLoading}
+                  className="w-14 h-14 bg-gray-500 text-white rounded-full flex items-center justify-center hover:bg-gray-600 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <X className="h-6 w-6" />
+                  {likeLoading ? (
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                  ) : (
+                    <X className="h-6 w-6" />
+                  )}
                 </button>
                 
                 {/* Super Like Button */}
                 <button
                   onClick={() => handleLike(currentProfile.id, true)}
-                  disabled={superLikesLeft <= 0}
+                  disabled={likeLoading || superLikesLeft <= 0}
                   className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full flex items-center justify-center hover:from-blue-600 hover:to-purple-600 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Zap className="h-6 w-6" />
+                  {likeLoading ? (
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                  ) : (
+                    <Zap className="h-6 w-6" />
+                  )}
                 </button>
 
                 <button
                   onClick={() => handleLike(currentProfile.id, false)}
-                  className="w-14 h-14 bg-gradient-to-r from-violet-500 to-orange-500 text-white rounded-full flex items-center justify-center hover:from-violet-600 hover:to-orange-600 transition-all shadow-lg"
+                  disabled={likeLoading}
+                  className="w-14 h-14 bg-gradient-to-r from-violet-500 to-orange-500 text-white rounded-full flex items-center justify-center hover:from-violet-600 hover:to-orange-600 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Heart className="h-6 w-6" />
+                  {likeLoading ? (
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                  ) : (
+                    <Heart className="h-6 w-6" />
+                  )}
                 </button>
               </div>
             )}

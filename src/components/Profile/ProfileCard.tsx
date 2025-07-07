@@ -4,10 +4,12 @@ import { Heart, X, MapPin, Calendar, Briefcase, GraduationCap, MessageCircle } f
 
 interface ProfileCardProps {
   profile: Profile
-  onLike?: (profileId: string) => void
+  onLike?: (profileId: string, isSuperLike?: boolean) => void
   onPass?: (profileId: string) => void
   onMessage?: (profileId: string) => void
   showActions?: boolean
+  loading?: boolean
+  superLikesLeft?: number
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ 
@@ -15,7 +17,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   onLike, 
   onPass, 
   onMessage,
-  showActions = true 
+  showActions = true,
+  loading = false,
+  superLikesLeft = 0
 }) => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
 
@@ -23,8 +27,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     setCurrentPhotoIndex(index)
   }
 
-  const handleLike = () => {
-    if (onLike) onLike(profile.id)
+  const handleLike = (isSuperLike = false) => {
+    if (onLike) onLike(profile.id, isSuperLike)
   }
 
   const handlePass = () => {
@@ -140,24 +144,53 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
         {/* Action Buttons */}
         {showActions && (
-          <div className="flex space-x-4 mt-6">
+          <div className="space-y-4 mt-6">
+            <div className="flex space-x-4">
+              <button
+                onClick={handlePass}
+                disabled={loading}
+                className="flex-1 bg-gray-100 text-gray-600 p-3 rounded-full hover:bg-gray-200 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600"></div>
+                ) : (
+                  <X className="h-4 w-4" />
+                )}
+              </button>
+              <button
+                onClick={handleMessage}
+                disabled={loading}
+                className="flex-1 bg-blue-100 text-blue-600 p-3 rounded-full hover:bg-blue-200 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <MessageCircle className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => handleLike(false)}
+                disabled={loading}
+                className="flex-1 bg-gradient-to-r from-violet-500 to-orange-500 text-white p-3 rounded-full hover:from-violet-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                ) : (
+                  <Heart className="h-4 w-4" />
+                )}
+              </button>
+            </div>
+            
+            {/* Super Like Button */}
             <button
-              onClick={handlePass}
-              className="flex-1  bg-gray-100 text-gray-600 p-3 rounded-full hover:bg-gray-200 transition-colors flex items-center justify-center"
+              onClick={() => handleLike(true)}
+              disabled={loading || superLikesLeft <= 0}
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white p-3 rounded-full hover:from-blue-600 hover:to-purple-600 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <X className="h-4 w-4" />
-            </button>
-            <button
-              onClick={handleMessage}
-              className="flex-1 bg-blue-100 text-blue-600 p-3 rounded-full hover:bg-blue-200 transition-colors flex items-center justify-center"
-            >
-              <MessageCircle className="h-4 w-4" />
-            </button>
-            <button
-              onClick={handleLike}
-              className="flex-1  bg-gradient-to-r from-violet-500 to-orange-500 text-white p-3 rounded-full hover:from-violet-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
-            >
-              <Heart className="h-4 w-4" />
+              {loading ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              ) : (
+                <>
+                  <span className="text-sm">Super Like</span>
+                  <span className="text-xs">({superLikesLeft} restants)</span>
+                </>
+              )}
             </button>
           </div>
         )}
