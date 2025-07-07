@@ -111,7 +111,7 @@ const Header: React.FC = () => {
                   >
                     <div className="relative">
                       <img
-                        src={profile?.avatar_url || '/default-avatar.png'}
+                        src={profile?.avatar_url || (profile?.photos && profile.photos.length > 0 ? profile.photos[0] : '/default-avatar.png')}
                         alt="Profile"
                         className="h-8 w-8 rounded-full object-cover ring-2 ring-violet-500 ring-offset-2"
                       />

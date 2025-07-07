@@ -19,6 +19,7 @@ export interface Profile {
   bio: string
   interests: string[]
   photos: string[]
+  avatar_url?: string
   created_at: string
   updated_at: string
   is_online: boolean
