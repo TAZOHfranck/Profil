@@ -111,8 +111,6 @@ function AppContent() {
           <Route path="/matches" element={<PrivateRoute><Matches /></PrivateRoute>} />
           <Route path="/messages" element={<PrivateRoute><Messages /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-          <Route path="/profile/settings" element={<PrivateRoute><Profile activeTab="settings" /></PrivateRoute>} />
-          <Route path="/profile/premium" element={<PrivateRoute><Profile activeTab="premium" /></PrivateRoute>} />
           <Route path="/safety" element={<PrivateRoute><SafetyCenter /></PrivateRoute>} />
           <Route path="/verification" element={<PrivateRoute><VerificationCenter /></PrivateRoute>} />
           <Route path="/compatibility" element={<PrivateRoute><CompatibilityTest /></PrivateRoute>} />
