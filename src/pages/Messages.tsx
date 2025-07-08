@@ -34,107 +34,24 @@ const Messages: React.FC = () => {
   }, [location.search, conversations, setSelectedConversation])
 
   useEffect(() => {
-    let isMounted = true;
-    
-    const loadConversations = async () => {
-      if (!user || !isMounted) return;
-      try {
-        await fetchConversations();
-      } catch (error) {
-        console.error('Error loading conversations:', error);
-      }
-    };
-
-    loadConversations();
-    
-    return () => {
-      isMounted = false;
-    };
+    if (user) {
+      fetchConversations()
+    }
   }, [user])
 
   useEffect(() => {
-    let isMounted = true;
-
-    const loadMessages = async () => {
-      if (!selectedConversation || !isMounted) return;
-      setLoading(true);
-      try {
-        await Promise.all([
-          fetchMessages(selectedConversation.profile.id),
-          markMessagesAsRead(selectedConversation.profile.id)
-        ]);
-      } catch (error) {
-        console.error('Error loading messages:', error);
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    loadMessages();
-
-    return () => {
-      isMounted = false;
-    };
+    if (selectedConversation) {
+      fetchMessages(selectedConversation.profile.id)
+      markMessagesAsRead(selectedConversation.profile.id)
+    }
   }, [selectedConversation])
-
-  useEffect(() => {
-    if (!user) return;
-
-    let isMounted = true;
-
-    // Abonnement aux changements de messages en temps réel
-    const subscription = supabase
-      .channel('messages_updates')
-      .on('postgres_changes', 
-        { 
-          event: '*', 
-          schema: 'public', 
-          table: 'messages',
-          filter: `sender_id=eq.${user.id},receiver_id=eq.${user.id}` 
-        }, 
-        async (payload) => {
-          if (!isMounted || !selectedConversation || !payload.new) return;
-          
-          const newMessage = payload.new as Message;
-          const isRelevantMessage = (
-            newMessage.sender_id === selectedConversation.profile.id || 
-            newMessage.receiver_id === selectedConversation.profile.id
-          );
-
-          if (isRelevantMessage) {
-            setMessages(prevMessages => {
-              // Éviter les doublons
-              const messageExists = prevMessages.some(msg => msg.id === newMessage.id);
-              if (messageExists) return prevMessages;
-              return [...prevMessages, newMessage];
-            });
-
-            // Marquer comme lu de manière asynchrone
-            if (newMessage.receiver_id === user.id && !newMessage.read) {
-              try {
-                await markMessagesAsRead(selectedConversation.profile.id);
-              } catch (error) {
-                console.error('Error marking message as read:', error);
-              }
-            }
-          }
-        }
-      )
-      .subscribe();
-
-    return () => {
-      isMounted = false;
-      subscription.unsubscribe();
-    };
-  }, [user, selectedConversation])
 
   const fetchConversations = async () => {
     if (!user) return
 
     try {
       setLoading(true)
+      // Get all unique conversation partners
       const { data: messageData, error } = await supabase
         .from('messages')
         .select(`
@@ -147,6 +64,7 @@ const Messages: React.FC = () => {
 
       if (error) throw error
 
+      // Group messages by conversation partner
       const conversationMap = new Map<string, ConversationWithProfile>()
 
       messageData?.forEach(message => {
@@ -161,6 +79,7 @@ const Messages: React.FC = () => {
           })
         }
 
+        // Count unread messages
         if (message.receiver_id === user.id && !message.read) {
           const conversation = conversationMap.get(partnerId)!
           conversation.unreadCount++
@@ -202,19 +121,6 @@ const Messages: React.FC = () => {
         .eq('sender_id', senderId)
         .eq('receiver_id', user.id)
         .eq('read', false)
-
-      // Mise à jour locale du compteur de messages non lus
-      setConversations(prevConversations => {
-        return prevConversations.map(conversation => {
-          if (conversation.profile.id === senderId) {
-            return {
-              ...conversation,
-              unreadCount: 0
-            };
-          }
-          return conversation;
-        });
-      })
     } catch (error) {
       console.error('Error marking messages as read:', error)
     }
@@ -224,24 +130,21 @@ const Messages: React.FC = () => {
     if (!user || !selectedConversation || !newMessage.trim()) return
 
     try {
-      const newMessageData = {
-        sender_id: user.id,
-        receiver_id: selectedConversation.profile.id,
-        content: newMessage,
-        message_type: 'text',
-        read: false,
-        created_at: new Date().toISOString()
-      }
-
       const { error } = await supabase
         .from('messages')
-        .insert(newMessageData)
+        .insert({
+          sender_id: user.id,
+          receiver_id: selectedConversation.profile.id,
+          content: newMessage,
+          message_type: 'text',
+          read: false
+        })
 
       if (error) throw error
 
-      // Mise à jour optimiste du message
-      setMessages(prev => [...prev, newMessageData as Message])
       setNewMessage('')
+      fetchMessages(selectedConversation.profile.id)
+      fetchConversations()
     } catch (error) {
       console.error('Error sending message:', error)
     }
@@ -274,7 +177,7 @@ const Messages: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden" style={{ height: 'calc(100vh - 200px)' }}>
           <div className="flex h-full">
-            {/* Liste des conversations */}
+            {/* Conversations List */}
             <div className="w-1/3 border-r border-gray-200 flex flex-col">
               <div className="p-4 border-b border-gray-200">
                 <h2 className="text-xl font-bold text-gray-800 mb-4">Messages</h2>
@@ -355,11 +258,11 @@ const Messages: React.FC = () => {
               </div>
             </div>
 
-            {/* Zone de messages */}
+            {/* Message Area */}
             <div className="flex-1 flex flex-col">
               {selectedConversation ? (
                 <>
-                  {/* En-tête du chat */}
+                  {/* Chat Header */}
                   <div className="p-4 border-b border-gray-200 bg-white">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
@@ -432,7 +335,7 @@ const Messages: React.FC = () => {
                     ))}
                   </div>
 
-                  {/* Saisie de message */}
+                  {/* Message Input */}
                   <div className="p-4 border-t border-gray-200">
                     <div className="flex space-x-2">
                       <input

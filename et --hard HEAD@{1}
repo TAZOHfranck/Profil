@@ -1,0 +1,9 @@
+[33me23e888[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: commit: suite
+[33mb69c9ec[m HEAD@{1}: pull --tags origin main: Fast-forward
+[33m1c4a705[m HEAD@{2}: reset: moving to 1c4a7053fce264b4ff8561a20e989215b44c1449
+[33m36e49bd[m HEAD@{3}: commit: change name app
+[33m1c4a705[m HEAD@{4}: pull --tags origin main: Fast-forward
+[33ma4b0915[m HEAD@{5}: pull --tags origin main: Fast-forward
+[33m1a011f2[m HEAD@{6}: Branch: renamed refs/heads/master to refs/heads/main
+[33m1a011f2[m HEAD@{8}: commit (initial): Premier commit
+
