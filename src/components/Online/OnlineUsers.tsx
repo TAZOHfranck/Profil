@@ -14,20 +14,23 @@ const OnlineUsers: React.FC = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (user && profile) {
-      fetchOnlineUsers()
-      
-      // Mettre à jour le statut en ligne de l'utilisateur actuel
-      updateOnlineStatus(true)
-      
-      // Actualiser la liste toutes les 30 secondes
-      const interval = setInterval(fetchOnlineUsers, 30000)
-      
-      // Nettoyer au démontage
-      return () => {
-        clearInterval(interval)
-        updateOnlineStatus(false)
-      }
+    if (!user || !profile) {
+      setLoading(false)
+      return
+    }
+
+    fetchOnlineUsers()
+    
+    // Mettre à jour le statut en ligne de l'utilisateur actuel
+    updateOnlineStatus(true)
+    
+    // Actualiser la liste toutes les 30 secondes
+    const interval = setInterval(fetchOnlineUsers, 30000)
+    
+    // Nettoyer au démontage
+    return () => {
+      clearInterval(interval)
+      updateOnlineStatus(false)
     }
   }, [user, profile])
 
