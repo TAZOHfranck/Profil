@@ -166,17 +166,17 @@ const Profile: React.FC<ProfileProps> = ({ activeTab: initialTab }) => {
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
             <Heart className="h-8 w-8 text-violet-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-gray-800">156</div>
+            <div className="text-2xl font-bold text-gray-800">{profile.likes_received_count || 0}</div>
             <div className="text-sm text-gray-600">Likes reçus</div>
           </div>
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
             <Users className="h-8 w-8 text-orange-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-gray-800">23</div>
+            <div className="text-2xl font-bold text-gray-800">{profile.matches_count || 0}</div>
             <div className="text-sm text-gray-600">Matches</div>
           </div>
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
             <MessageCircle className="h-8 w-8 text-blue-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-gray-800">12</div>
+            <div className="text-2xl font-bold text-gray-800">{profile.conversations_count || 0}</div>
             <div className="text-sm text-gray-600">Conversations</div>
           </div>
         </div>
