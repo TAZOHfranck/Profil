@@ -174,11 +174,11 @@ const Messages: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 pb-20">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden" style={{ height: 'calc(100vh - 200px)' }}>
-          <div className="flex h-full">
+          <div className="flex h-full flex-col md:flex-row">
             {/* Conversations List */}
-            <div className="w-1/3 border-r border-gray-200 flex flex-col">
+            <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-gray-200 flex flex-col">
               <div className="p-4 border-b border-gray-200">
                 <h2 className="text-xl font-bold text-gray-800 mb-4">Messages</h2>
                 <div className="relative">
@@ -293,7 +293,7 @@ const Messages: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="hidden sm:flex items-center space-x-2">
                         <button className="p-2 hover:bg-gray-100 rounded-full">
                           <Phone className="h-5 w-5 text-gray-500" />
                         </button>
@@ -308,7 +308,7 @@ const Messages: React.FC = () => {
                   </div>
 
                   {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                  <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-4">
                     {messages.map((message) => (
                       <div
                         key={message.id}
@@ -336,7 +336,7 @@ const Messages: React.FC = () => {
                   </div>
 
                   {/* Message Input */}
-                  <div className="p-4 border-t border-gray-200">
+                  <div className="p-2 sm:p-4 border-t border-gray-200">
                     <div className="flex space-x-2">
                       <input
                         type="text"
