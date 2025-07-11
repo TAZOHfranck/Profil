@@ -48,7 +48,7 @@ const OnlineUsers: React.FC = () => {
         .select('*')
         .neq('id', user.id)
         .eq('is_online', true)
-        .gte('last_seen', fiveMinutesAgo)
+        // .gte('last_seen', fiveMinutesAgo)
 
       // Filtrer selon les préférences de l'utilisateur
       if (profile.looking_for !== 'both') {

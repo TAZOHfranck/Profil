@@ -30,10 +30,11 @@ const Header: React.FC = () => {
   const userMenuRef = useRef<HTMLDivElement>(null)
 
   const handleSignOut = async () => {
-    try {
+        try {
       await signOut()
+      navigate('/login') // 👈 redirection vers page de connexion
     } catch (error) {
-      console.error('Error signing out:', error)
+      console.error('Erreur lors de la déconnexion :', error)
     }
   }
 
