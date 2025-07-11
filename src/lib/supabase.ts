@@ -13,9 +13,6 @@ export const supabase = createClient(supabaseUrl, supabaseKey)
 export interface Profile {
   id: string
   email: string
-  likes_received_count: number
-  matches_count: number
-  conversations_count: number
   full_name: string
   age: number
   location: string

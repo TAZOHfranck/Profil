@@ -24,15 +24,24 @@ import AuthDebugPanel from './components/Auth/AuthDebugPanel'
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth()
   const [error, setError] = React.useState<string | null>(null)
+  const [showError, setShowError] = React.useState(false)
 
   React.useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (loading) {
-        setError('Le chargement prend plus de temps que prévu. Veuillez rafraîchir la page.')
-      }
-    }, 10000) // 10 secondes timeout
+    let timeoutId: NodeJS.Timeout
 
-    return () => clearTimeout(timeoutId)
+    if (loading) {
+      timeoutId = setTimeout(() => {
+        setError('Le chargement prend plus de temps que prévu. Veuillez rafraîchir la page.')
+        setShowError(true)
+      }, 5000) // 5 secondes timeout
+    } else {
+      setShowError(false)
+      setError(null)
+    }
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId)
+    }
   }, [loading])
   
   if (loading) {
@@ -41,8 +50,16 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Chargement...</p>
-          {error && (
-            <p className="text-red-500 mt-4">{error}</p>
+          {showError && error && (
+            <div className="mt-4">
+              <p className="text-red-500">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-2 px-4 py-2 bg-violet-500 text-white rounded-lg hover:bg-violet-600 transition-colors"
+              >
+                Rafraîchir la page
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -111,6 +128,8 @@ function AppContent() {
           <Route path="/matches" element={<PrivateRoute><Matches /></PrivateRoute>} />
           <Route path="/messages" element={<PrivateRoute><Messages /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="/profile/settings" element={<PrivateRoute><Profile activeTab="settings" /></PrivateRoute>} />
+          <Route path="/profile/premium" element={<PrivateRoute><Profile activeTab="premium" /></PrivateRoute>} />
           <Route path="/safety" element={<PrivateRoute><SafetyCenter /></PrivateRoute>} />
           <Route path="/verification" element={<PrivateRoute><VerificationCenter /></PrivateRoute>} />
           <Route path="/compatibility" element={<PrivateRoute><CompatibilityTest /></PrivateRoute>} />

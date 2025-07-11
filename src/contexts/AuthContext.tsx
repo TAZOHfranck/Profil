@@ -17,7 +17,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const useAuth = () => {
   const context = useContext(AuthContext)
-  if (!context) throw new Error('useAuth must be used within an AuthProvider')
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider')
+  }
   return context
 }
 
@@ -26,8 +28,60 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
 
-  // Charger le profil à partir de Supabase
-  const fetchProfile = async (userId: string): Promise<Profile | null> => {
+  useEffect(() => {
+    let mounted = true
+
+    // Get initial session
+    const initializeAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        
+        if (!mounted) return
+
+        setUser(session?.user ?? null)
+        if (session?.user) {
+          await fetchProfile(session.user.id)
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error)
+      } finally {
+        if (mounted) {
+          setLoading(false)
+        }
+      }
+    }
+
+    initializeAuth()
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (!mounted) return
+
+      try {
+        setUser(session?.user ?? null)
+        if (session?.user) {
+          await fetchProfile(session.user.id)
+        } else {
+          setProfile(null)
+        }
+      } catch (error) {
+        console.error('Error handling auth change:', error)
+      } finally {
+        if (mounted) {
+          setLoading(false)
+        }
+      }
+    })
+
+    return () => {
+      mounted = false
+      subscription.unsubscribe()
+    }
+  }, [])
+
+  const fetchProfile = async (userId: string, retryCount = 0) => {
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -36,93 +90,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .single()
 
       if (error) {
-        console.error('❌ Erreur fetchProfile:', error.message)
-        return null
+        // If no rows found and we haven't exceeded retry limit, retry after a delay
+        if (error.code === 'PGRST116' && retryCount < 3) {
+          console.log(`Profile not found, retrying... (attempt ${retryCount + 1})`)
+          await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)))
+          return fetchProfile(userId, retryCount + 1)
+        }
+        throw error
       }
-
-      return data
-    } catch (err) {
-      console.error('❌ Exception fetchProfile:', err)
-      return null
+      
+      setProfile(data)
+    } catch (error) {
+      console.error('Error fetching profile:', error)
+      // Don't throw the error to prevent app crashes
+      // The profile will remain null and the app can handle this state
     }
   }
 
-  // Chargement initial
-  useEffect(() => {
-    const loadInitialData = async () => {
-      setLoading(true)
-
-      const { data, error } = await supabase.auth.getSession()
-      const currentUser = data?.session?.user ?? null
-      setUser(currentUser)
-
-      const cachedProfile = localStorage.getItem('profile')
-      if (cachedProfile) {
-        setProfile(JSON.parse(cachedProfile))
-      }
-
-      if (currentUser) {
-        const freshProfile = await fetchProfile(currentUser.id)
-        if (freshProfile) {
-          setProfile(freshProfile)
-          localStorage.setItem('profile', JSON.stringify(freshProfile))
-        } else {
-          setProfile(null)
-          localStorage.removeItem('profile')
-        }
-      }
-
-      setLoading(false)
-    }
-
-    loadInitialData()
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setLoading(true)
-      const newUser = session?.user ?? null
-      setUser(newUser)
-
-      if (newUser) {
-        const freshProfile = await fetchProfile(newUser.id)
-        if (freshProfile) {
-          setProfile(freshProfile)
-          localStorage.setItem('profile', JSON.stringify(freshProfile))
-        } else {
-          setProfile(null)
-          localStorage.removeItem('profile')
-        }
-      } else {
-        setProfile(null)
-        localStorage.removeItem('profile')
-      }
-
-      setLoading(false)
-    })
-
-    const interval = setInterval(async () => {
-      const { data } = await supabase.auth.getSession()
-      const currentUser = data?.session?.user ?? null
-      setUser(currentUser)
-
-      if (currentUser) {
-        const freshProfile = await fetchProfile(currentUser.id)
-        if (freshProfile) {
-          setProfile(freshProfile)
-          localStorage.setItem('profile', JSON.stringify(freshProfile))
-        }
-      }
-    }, 3 * 60 * 1000)
-
-    return () => {
-      authListener.subscription.unsubscribe()
-      clearInterval(interval)
-    }
-  }, [])
-
-  // Auth handlers
-
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
     if (error) throw error
   }
 
@@ -130,37 +119,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/discover`,
-      },
+        redirectTo: `${window.location.origin}/discover`
+      }
     })
     if (error) throw error
   }
 
   const signUp = async (email: string, password: string, userData: Partial<Profile>) => {
-    const { data, error } = await supabase.auth.signUp({ email, password })
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    })
     if (error) throw error
 
     if (data.user) {
-      // Attendre un petit délai pour éviter une course
+      // Wait a bit for the trigger to create the profile
       await new Promise(resolve => setTimeout(resolve, 1000))
-
-      const { error: upsertError } = await supabase.from('profiles').upsert([{
-        id: data.user.id,
-        email,
-        ...userData,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      }])
-
-      if (upsertError) throw upsertError
+      
+      // Update the profile with user data
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ 
+          ...userData,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', data.user.id)
+      
+      if (profileError) {
+        console.error('Error updating profile:', profileError)
+        // Don't throw error, profile will be updated later
+      }
     }
   }
 
   const signOut = async () => {
-    await supabase.auth.signOut()
-    setUser(null)
-    setProfile(null)
-    localStorage.removeItem('profile')
+    const { error } = await supabase.auth.signOut()
+    if (error) throw error
   }
 
   const updateProfile = async (updates: Partial<Profile>) => {
@@ -172,13 +166,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       .eq('id', user.id)
 
     if (error) throw error
-
-    const updated = { ...profile, ...updates } as Profile
-    setProfile(updated)
-    localStorage.setItem('profile', JSON.stringify(updated))
+    
+    // Update local state
+    setProfile(prev => prev ? { ...prev, ...updates } : null)
   }
 
-  const value: AuthContextType = {
+  const value = {
     user,
     profile,
     loading,

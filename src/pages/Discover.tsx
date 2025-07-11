@@ -97,7 +97,7 @@ const Discover: React.FC = () => {
 
       Object.entries(filters).forEach(([key, value]) => {
         if (value && typeof value === 'string') {
-          query = query.ilike(key, `%${value}%`)
+          query = query.ilike(key, %${value}%)
         } else if (Array.isArray(value) && value.length > 0) {
           query = query.contains(key, value)
         } else if (typeof value === 'boolean' && value) {
@@ -185,7 +185,7 @@ const Discover: React.FC = () => {
         lastMessage: null,
         unreadCount: 0
       })
-      navigate(`/messages?user=${profileId}`)
+      navigate(/messages?user=${profileId})
     }
   }, [profiles, setSelectedConversation, navigate])
 
