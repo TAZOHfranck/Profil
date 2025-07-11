@@ -385,6 +385,7 @@ const Discover: React.FC = () => {
               />
             )}
 
+<<<<<<< HEAD
             {/* Profile Display */}
             <div className="flex justify-center">
               {currentProfile ? (
@@ -404,6 +405,63 @@ const Discover: React.FC = () => {
                     <div className="absolute -top-2 -right-2 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center space-x-1">
                       <Crown className="h-4 w-4" />
                       <span>Premium</span>
+=======
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {profiles.length > 0 ? (
+                profiles.map((profile, index) => (
+                  <div 
+                    key={profile.id} 
+                    className="relative transform hover:scale-105 transition-transform duration-200"
+                    ref={index === profiles.length - 1 ? ref : undefined}
+                  >
+                    <ProfileCard
+                      profile={profile}
+                      onLike={handleLike}
+                      onPass={handlePass}
+                      onMessage={handleMessage}
+                      showActions={true}
+                      loading={likeLoading}
+                      superLikesLeft={superLikesLeft}
+                    />
+                    
+                    {profile.is_premium && (
+                      <div className="absolute -top-2 -right-2 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center space-x-1 z-10">
+                        <Crown className="h-4 w-4" />
+                        <span>Premium</span>
+                      </div>
+                    )}
+
+                    {profile.is_verified && (
+                      <div className="absolute -top-2 -left-2 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10">
+                        ✓ Vérifié
+                      </div>
+                    )}
+
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+                      {/* <button
+                        onClick={() => handlePass(profile.id)}
+                        disabled={likeLoading}
+                        className="w-10 h-10 bg-gray-500 text-white rounded-full flex items-center justify-center hover:bg-gray-600 transition-all transform hover:scale-110 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <X className="h-5 w-5" />
+                      </button> */}
+                      
+                      {/* <button
+                        onClick={() => handleLike(profile.id, true)}
+                        disabled={likeLoading || superLikesLeft <= 0}
+                        className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full flex items-center justify-center hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-110 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Zap className="h-5 w-5" />
+                      </button> */}
+
+                      {/* <button
+                        onClick={() => handleLike(profile.id, false)}
+                        disabled={likeLoading}
+                        className="w-10 h-10 bg-gradient-to-r from-violet-500 to-orange-500 text-white rounded-full flex items-center justify-center hover:from-violet-600 hover:to-orange-600 transition-all transform hover:scale-110 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Heart className="h-5 w-5" />
+                      </button> */}
+>>>>>>> 89e2284cddfc1c11142e3570b40a910cf8916afc
                     </div>
                   )}
 
