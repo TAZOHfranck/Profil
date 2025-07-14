@@ -31,47 +31,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     let mounted = true
 
-    // Get initial session
-    const initializeAuth = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession()
-        
-        if (!mounted) return
+const initializeAuth = async () => {
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession()
+    console.log('Initial session:', session)
+    console.log('Initial session error:', error)
 
-        setUser(session?.user ?? null)
-        if (session?.user) {
-          await fetchProfile(session.user.id)
-        }
-      } catch (error) {
-        console.error('Error initializing auth:', error)
-      } finally {
-        if (mounted) {
-          setLoading(false)
-        }
-      }
+    setUser(session?.user ?? null)
+    setLoading(false)
+
+    if (session?.user) {
+      fetchProfile(session.user.id)
     }
+  } catch (error) {
+    console.error('Error initializing auth:', error)
+    setLoading(false)
+  }
+}
+
 
     initializeAuth()
 
-    // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (!mounted) return
 
       try {
         setUser(session?.user ?? null)
+        setLoading(false) // <-- déplacé ici aussi
+
         if (session?.user) {
-          await fetchProfile(session.user.id)
+          fetchProfile(session.user.id)
         } else {
           setProfile(null)
         }
       } catch (error) {
         console.error('Error handling auth change:', error)
-      } finally {
-        if (mounted) {
-          setLoading(false)
-        }
+        if (mounted) setLoading(false)
       }
     })
 
@@ -90,7 +87,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .single()
 
       if (error) {
-        // If no rows found and we haven't exceeded retry limit, retry after a delay
         if (error.code === 'PGRST116' && retryCount < 3) {
           console.log(`Profile not found, retrying... (attempt ${retryCount + 1})`)
           await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)))
@@ -98,12 +94,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
         throw error
       }
-      
+
       setProfile(data)
     } catch (error) {
       console.error('Error fetching profile:', error)
-      // Don't throw the error to prevent app crashes
-      // The profile will remain null and the app can handle this state
     }
   }
 
@@ -119,8 +113,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/discover`
-      }
+        redirectTo: `${window.location.origin}/discover`,
+      },
     })
     if (error) throw error
   }
@@ -133,21 +127,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (error) throw error
 
     if (data.user) {
-      // Wait a bit for the trigger to create the profile
       await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Update the profile with user data
       const { error: profileError } = await supabase
         .from('profiles')
-        .update({ 
+        .update({
           ...userData,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('id', data.user.id)
-      
+
       if (profileError) {
         console.error('Error updating profile:', profileError)
-        // Don't throw error, profile will be updated later
       }
     }
   }
@@ -166,9 +156,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       .eq('id', user.id)
 
     if (error) throw error
-    
-    // Update local state
-    setProfile(prev => prev ? { ...prev, ...updates } : null)
+
+    setProfile(prev => (prev ? { ...prev, ...updates } : null))
   }
 
   const value = {
