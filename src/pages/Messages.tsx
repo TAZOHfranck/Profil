@@ -173,12 +173,12 @@ const Messages: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#111b21] md:bg-gradient-to-br md:from-red-50 md:to-orange-50 pb-0 md:pb-20">
-      <div className="w-full md:container md:mx-auto px-0 md:px-4 py-0 md:py-8">
-        <div className="bg-[#111b21] md:bg-white md:rounded-xl shadow-lg overflow-hidden h-screen md:h-[calc(100vh-200px)]">
+    <div className="min-h-screen bg-[#111b21] md:bg-gradient-to-br md:from-red-50 md:to-orange-50 pb-0 md:pb-0">
+      <div className="w-full h-screen md:w-full md:h-screen px-0 py-0">
+        <div className="bg-[#111b21] md:bg-white shadow-lg overflow-hidden h-screen w-full">
           <div className="flex h-full flex-col md:flex-row">
             {/* Conversations List */}
-            <div className={`w-full md:w-1/3 border-b md:border-b-0 md:border-r border-[#222d34] md:border-gray-200 flex flex-col bg-[#111b21] md:bg-white ${selectedConversation ? 'hidden md:flex' : 'flex'}`}>
+            <div className={`w-full md:w-[400px] border-b md:border-b-0 md:border-r border-[#222d34] md:border-gray-200 flex flex-col bg-[#111b21] md:bg-white ${selectedConversation ? 'hidden md:flex' : 'flex'}`}>
               <div className="p-4 border-b border-[#222d34] md:border-gray-200 bg-[#202c33] md:bg-white">
                 <h2 className="text-xl font-bold text-[#e9edef] md:text-gray-800 mb-4">Messages</h2>
                 <div className="relative bg-[#202c33] md:bg-white rounded-lg">
