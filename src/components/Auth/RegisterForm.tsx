@@ -217,7 +217,7 @@ const RegisterForm: React.FC = () => {
                   >
                     <option value="male">Homme</option>
                     <option value="female">Femme</option>
-                    <option value="both">Les deux</option>
+                  
                   </select>
                 </div>
               </div>

@@ -22,6 +22,78 @@ const Messages: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const location = useLocation()
 
+  const sendMatchRequest = async () => {
+    if (!user || !selectedConversation) {
+      console.log('Utilisateur ou conversation non sélectionnée');
+      return;
+    }
+
+    try {
+      console.log('Tentative de match entre:', user.id, 'et', selectedConversation.profile.id);
+
+      // Vérifier si une demande existe déjà
+      const { data: existingMatch, error: checkError } = await supabase
+        .from('matches')
+        .select('*')
+        .or(`user_id.eq.${user.id},matched_user_id.eq.${user.id}`)
+        .eq('matched_user_id', selectedConversation.profile.id)
+        .single();
+
+      if (checkError) {
+        console.error('Erreur lors de la vérification du match:', checkError);
+        throw checkError;
+      }
+
+      console.log('Match existant:', existingMatch);
+
+      if (existingMatch) {
+        if (existingMatch.status === 'mutual') {
+          alert('Vous êtes déjà en match avec cette personne !');
+          return;
+        } else if (existingMatch.user_id === user.id) {
+          alert('Vous avez déjà envoyé une demande de match à cette personne');
+          return;
+        } else if (existingMatch.matched_user_id === user.id) {
+          console.log('Mise à jour du match en mutuel');
+          // L'autre personne a déjà envoyé une demande, on crée un match mutuel
+          const { error: updateError } = await supabase
+            .from('matches')
+            .update({ status: 'mutual', updated_at: new Date().toISOString() })
+            .eq('id', existingMatch.id);
+
+          if (updateError) {
+            console.error('Erreur lors de la mise à jour du match:', updateError);
+            throw updateError;
+          }
+          alert('Match mutuel créé !');
+          return;
+        }
+      }
+
+      console.log('Création d\'une nouvelle demande de match');
+      // Créer une nouvelle demande de match
+      const { error: insertError } = await supabase
+        .from('matches')
+        .insert({
+          user_id: user.id,
+          matched_user_id: selectedConversation.profile.id,
+          status: 'pending',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        });
+
+      if (insertError) {
+        console.error('Erreur lors de la création du match:', insertError);
+        throw insertError;
+      }
+      alert('Demande de match envoyée !');
+
+    } catch (error) {
+      console.error('Erreur détaillée lors de la demande de match:', error);
+      alert('Une erreur est survenue lors de la demande de match. Vérifiez la console pour plus de détails.');
+    }
+  }
+
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const userId = params.get('user')
@@ -304,6 +376,15 @@ const Messages: React.FC = () => {
                         </div>
                       </div>
                       <div className="hidden sm:flex items-center space-x-2">
+                        <button 
+                          onClick={sendMatchRequest}
+                          className="p-2 hover:bg-gray-100 rounded-full text-red-500 hover:text-red-700"
+                          title="Envoyer une demande de match"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                          </svg>
+                        </button>
                         <button className="p-2 hover:bg-gray-100 rounded-full">
                           <Phone className="h-5 w-5 text-gray-500" />
                         </button>
